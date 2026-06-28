@@ -57,4 +57,9 @@ public final class ClientProxy {
                 Item.getItemFromBlock(ModBlocks.TUNGSTEN_CARBIDE_ORE), 0,
                 new ModelResourceLocation(ModBlocks.TUNGSTEN_CARBIDE_ORE.getRegistryName(), "inventory")
         );
+
+        ModelLoader.setCustomModelResourceLocation(
+                Item.getItemFromBlock(ModBlocks.FUEL_GENERATOR), 0,
+                new ModelResourceLocation(ModBlocks.FUEL_GENERATOR.getRegistryName(), "inventory")
+        );
     }}

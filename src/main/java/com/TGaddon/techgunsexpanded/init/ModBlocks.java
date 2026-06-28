@@ -10,9 +10,11 @@ public class ModBlocks {
 
     public static Block TUNGSTEN_CARBIDE_ORE;
     public static Block TUNGSTEN_CARBIDE_BLOCK;
+    public static Block FUEL_GENERATOR;
 
     public static ItemBlock TUNGSTEN_CARBIDE_ORE_ITEM;
     public static ItemBlock TUNGSTEN_CARBIDE_BLOCK_ITEM;
+    public static ItemBlock FUEL_GENERATOR_ITEM;
 
     public static void register() {
         TUNGSTEN_CARBIDE_ORE = new Block(Material.ROCK)
@@ -34,4 +36,9 @@ public class ModBlocks {
 
         TUNGSTEN_CARBIDE_BLOCK_ITEM = new ItemBlock(TUNGSTEN_CARBIDE_BLOCK);
         TUNGSTEN_CARBIDE_BLOCK_ITEM.setRegistryName(TUNGSTEN_CARBIDE_BLOCK.getRegistryName());
+
+        FUEL_GENERATOR = new BlockFuelGenerator();
+
+        FUEL_GENERATOR_ITEM = new ItemBlock(FUEL_GENERATOR);
+        FUEL_GENERATOR_ITEM.setRegistryName(FUEL_GENERATOR.getRegistryName());
 }}

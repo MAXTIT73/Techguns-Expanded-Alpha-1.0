@@ -18,6 +18,7 @@ public final class RegistryHandler {
         event.getRegistry().register(ModFluids.OIL_BLOCK);
         event.getRegistry().register(ModBlocks.TUNGSTEN_CARBIDE_ORE);
         event.getRegistry().register(ModBlocks.TUNGSTEN_CARBIDE_BLOCK);
+        event.getRegistry().register(ModBlocks.FUEL_GENERATOR);
     }
 
     @SubscribeEvent
@@ -26,6 +27,7 @@ public final class RegistryHandler {
         event.getRegistry().register(ModItems.TUNGSTEN_CARBIDE_INGOT);
         event.getRegistry().register(ModBlocks.TUNGSTEN_CARBIDE_ORE_ITEM);
         event.getRegistry().register(ModBlocks.TUNGSTEN_CARBIDE_BLOCK_ITEM);
+        event.getRegistry().register(ModBlocks.FUEL_GENERATOR_ITEM);
     }
 
     // 30000 тиков = 150 предметов за ведро (~2.3 стака), лава = 20000 тиков (~1.56 стака)
