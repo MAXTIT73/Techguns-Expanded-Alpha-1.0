@@ -61,7 +61,7 @@ public class TileEntityFuelGenerator extends TileEntity implements ITickable {
         if (burnTime > 0) {
             burnTime--;
             if (energyStored < MAX_ENERGY) {
-                energyStored = Math.min(energyStored + RF_PER_TICK, MAX_ENERGY);
+                energyStored = Math.min(energyStored + getRfPerTick(), MAX_ENERGY);
             }
             markDirty();
         }
@@ -136,6 +136,9 @@ public class TileEntityFuelGenerator extends TileEntity implements ITickable {
         totalBurnTime = compound.getInteger("totalBurnTime");
         inventory.deserializeNBT(compound.getCompoundTag("inventory"));
     }
+
+    protected int getRfPerTick() { return RF_PER_TICK; }
+    public String getGuiTitle() { return "Fuel Generator"; }
 
     public ItemStackHandler getInventory() { return inventory; }
     public int getEnergyStored() { return energyStored; }

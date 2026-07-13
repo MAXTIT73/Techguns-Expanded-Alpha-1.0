@@ -5,6 +5,12 @@ import com.TGaddon.techgunsexpanded.init.ModBlocks;
 import com.TGaddon.techgunsexpanded.init.ModFluids;
 import com.TGaddon.techgunsexpanded.init.ModItems;
 import com.TGaddon.techgunsexpanded.init.TileEntityFuelGenerator;
+import com.TGaddon.techgunsexpanded.init.TileEntityFuelGeneratorMk2;
+import com.TGaddon.techgunsexpanded.init.TileEntityFuelGeneratorMk3;
+import com.TGaddon.techgunsexpanded.init.TileEntityFuelGeneratorMk4;
+import com.TGaddon.techgunsexpanded.init.TileEntityFuelGeneratorMk5;
+import com.TGaddon.techgunsexpanded.init.TileEntityFuelGeneratorMk6;
+import com.TGaddon.techgunsexpanded.init.TileEntityFuelGeneratorCreative;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.Mod;
@@ -39,6 +45,18 @@ public class TechgunsExpanded
         ModBlocks.register();
         GameRegistry.registerTileEntity(TileEntityFuelGenerator.class,
                 new ResourceLocation(MODID, "fuel_generator"));
+        GameRegistry.registerTileEntity(TileEntityFuelGeneratorMk2.class,
+                new ResourceLocation(MODID, "fuel_generator_mk2"));
+        GameRegistry.registerTileEntity(TileEntityFuelGeneratorMk3.class,
+                new ResourceLocation(MODID, "fuel_generator_mk3"));
+        GameRegistry.registerTileEntity(TileEntityFuelGeneratorMk4.class,
+                new ResourceLocation(MODID, "fuel_generator_mk4"));
+        GameRegistry.registerTileEntity(TileEntityFuelGeneratorMk5.class,
+                new ResourceLocation(MODID, "fuel_generator_mk5"));
+        GameRegistry.registerTileEntity(TileEntityFuelGeneratorMk6.class,
+                new ResourceLocation(MODID, "fuel_generator_mk6"));
+        GameRegistry.registerTileEntity(TileEntityFuelGeneratorCreative.class,
+                new ResourceLocation(MODID, "fuel_generator_creative"));
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
     }
 

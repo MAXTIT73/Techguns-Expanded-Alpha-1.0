@@ -11,10 +11,22 @@ public class ModBlocks {
     public static Block TUNGSTEN_CARBIDE_ORE;
     public static Block TUNGSTEN_CARBIDE_BLOCK;
     public static Block FUEL_GENERATOR;
+    public static Block FUEL_GENERATOR_MK2;
+    public static Block FUEL_GENERATOR_MK3;
+    public static Block FUEL_GENERATOR_MK4;
+    public static Block FUEL_GENERATOR_MK5;
+    public static Block FUEL_GENERATOR_MK6;
+    public static Block FUEL_GENERATOR_CREATIVE;
 
     public static ItemBlock TUNGSTEN_CARBIDE_ORE_ITEM;
     public static ItemBlock TUNGSTEN_CARBIDE_BLOCK_ITEM;
     public static ItemBlock FUEL_GENERATOR_ITEM;
+    public static ItemBlock FUEL_GENERATOR_MK2_ITEM;
+    public static ItemBlock FUEL_GENERATOR_MK3_ITEM;
+    public static ItemBlock FUEL_GENERATOR_MK4_ITEM;
+    public static ItemBlock FUEL_GENERATOR_MK5_ITEM;
+    public static ItemBlock FUEL_GENERATOR_MK6_ITEM;
+    public static ItemBlock FUEL_GENERATOR_CREATIVE_ITEM;
 
     public static void register() {
         TUNGSTEN_CARBIDE_ORE = new Block(Material.ROCK)
@@ -38,7 +50,30 @@ public class ModBlocks {
         TUNGSTEN_CARBIDE_BLOCK_ITEM.setRegistryName(TUNGSTEN_CARBIDE_BLOCK.getRegistryName());
 
         FUEL_GENERATOR = new BlockFuelGenerator();
-
         FUEL_GENERATOR_ITEM = new ItemBlock(FUEL_GENERATOR);
         FUEL_GENERATOR_ITEM.setRegistryName(FUEL_GENERATOR.getRegistryName());
+
+        FUEL_GENERATOR_MK2 = new BlockFuelGeneratorMk2();
+        FUEL_GENERATOR_MK2_ITEM = new ItemBlock(FUEL_GENERATOR_MK2);
+        FUEL_GENERATOR_MK2_ITEM.setRegistryName(FUEL_GENERATOR_MK2.getRegistryName());
+
+        FUEL_GENERATOR_MK3 = new BlockFuelGeneratorMk3();
+        FUEL_GENERATOR_MK3_ITEM = new ItemBlock(FUEL_GENERATOR_MK3);
+        FUEL_GENERATOR_MK3_ITEM.setRegistryName(FUEL_GENERATOR_MK3.getRegistryName());
+
+        FUEL_GENERATOR_MK4 = new BlockFuelGeneratorMk4();
+        FUEL_GENERATOR_MK4_ITEM = new ItemBlock(FUEL_GENERATOR_MK4);
+        FUEL_GENERATOR_MK4_ITEM.setRegistryName(FUEL_GENERATOR_MK4.getRegistryName());
+
+        FUEL_GENERATOR_MK5 = new BlockFuelGeneratorMk5();
+        FUEL_GENERATOR_MK5_ITEM = new ItemBlock(FUEL_GENERATOR_MK5);
+        FUEL_GENERATOR_MK5_ITEM.setRegistryName(FUEL_GENERATOR_MK5.getRegistryName());
+
+        FUEL_GENERATOR_MK6 = new BlockFuelGeneratorMk6();
+        FUEL_GENERATOR_MK6_ITEM = new ItemBlock(FUEL_GENERATOR_MK6);
+        FUEL_GENERATOR_MK6_ITEM.setRegistryName(FUEL_GENERATOR_MK6.getRegistryName());
+
+        FUEL_GENERATOR_CREATIVE = new BlockFuelGeneratorCreative();
+        FUEL_GENERATOR_CREATIVE_ITEM = new ItemBlock(FUEL_GENERATOR_CREATIVE);
+        FUEL_GENERATOR_CREATIVE_ITEM.setRegistryName(FUEL_GENERATOR_CREATIVE.getRegistryName());
 }}

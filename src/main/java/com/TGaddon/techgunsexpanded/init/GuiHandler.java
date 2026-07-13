@@ -14,6 +14,24 @@ public class GuiHandler implements IGuiHandler {
         if (id == 0 && te instanceof TileEntityFuelGenerator) {
             return new ContainerFuelGenerator(player.inventory, (TileEntityFuelGenerator) te);
         }
+        if (id == 1 && te instanceof TileEntityFuelGeneratorMk2) {
+            return new ContainerFuelGenerator(player.inventory, (TileEntityFuelGeneratorMk2) te);
+        }
+        if (id == 2 && te instanceof TileEntityFuelGeneratorMk3) {
+            return new ContainerFuelGenerator(player.inventory, (TileEntityFuelGeneratorMk3) te);
+        }
+        if (id == 3 && te instanceof TileEntityFuelGeneratorMk4) {
+            return new ContainerFuelGenerator(player.inventory, (TileEntityFuelGeneratorMk4) te);
+        }
+        if (id == 4 && te instanceof TileEntityFuelGeneratorMk5) {
+            return new ContainerFuelGenerator(player.inventory, (TileEntityFuelGeneratorMk5) te);
+        }
+        if (id == 5 && te instanceof TileEntityFuelGeneratorMk6) {
+            return new ContainerFuelGenerator(player.inventory, (TileEntityFuelGeneratorMk6) te);
+        }
+        if (id == 6 && te instanceof TileEntityFuelGeneratorCreative) {
+            return new ContainerFuelGenerator(player.inventory, (TileEntityFuelGeneratorCreative) te);
+        }
         return null;
     }
 
@@ -22,6 +40,24 @@ public class GuiHandler implements IGuiHandler {
         TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
         if (id == 0 && te instanceof TileEntityFuelGenerator) {
             return new GuiFuelGenerator(player.inventory, (TileEntityFuelGenerator) te);
+        }
+        if (id == 1 && te instanceof TileEntityFuelGeneratorMk2) {
+            return new GuiFuelGenerator(player.inventory, (TileEntityFuelGeneratorMk2) te);
+        }
+        if (id == 2 && te instanceof TileEntityFuelGeneratorMk3) {
+            return new GuiFuelGenerator(player.inventory, (TileEntityFuelGeneratorMk3) te);
+        }
+        if (id == 3 && te instanceof TileEntityFuelGeneratorMk4) {
+            return new GuiFuelGenerator(player.inventory, (TileEntityFuelGeneratorMk4) te);
+        }
+        if (id == 4 && te instanceof TileEntityFuelGeneratorMk5) {
+            return new GuiFuelGenerator(player.inventory, (TileEntityFuelGeneratorMk5) te);
+        }
+        if (id == 5 && te instanceof TileEntityFuelGeneratorMk6) {
+            return new GuiFuelGenerator(player.inventory, (TileEntityFuelGeneratorMk6) te);
+        }
+        if (id == 6 && te instanceof TileEntityFuelGeneratorCreative) {
+            return new GuiFuelGenerator(player.inventory, (TileEntityFuelGeneratorCreative) te);
         }
         return null;
     }

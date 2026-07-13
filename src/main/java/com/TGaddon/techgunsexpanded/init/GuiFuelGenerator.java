@@ -51,7 +51,7 @@ public class GuiFuelGenerator extends GuiContainer {
 
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        String title = "Fuel Generator";
+        String title = te.getGuiTitle();
         fontRenderer.drawString(title, xSize / 2 - fontRenderer.getStringWidth(title) / 2, 6, 0x404040);
         fontRenderer.drawString("Inventory", 8, ySize - 94, 0x404040);
 

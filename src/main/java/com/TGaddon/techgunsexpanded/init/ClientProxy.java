@@ -62,4 +62,34 @@ public final class ClientProxy {
                 Item.getItemFromBlock(ModBlocks.FUEL_GENERATOR), 0,
                 new ModelResourceLocation(ModBlocks.FUEL_GENERATOR.getRegistryName(), "inventory")
         );
+
+        ModelLoader.setCustomModelResourceLocation(
+                Item.getItemFromBlock(ModBlocks.FUEL_GENERATOR_MK2), 0,
+                new ModelResourceLocation(ModBlocks.FUEL_GENERATOR_MK2.getRegistryName(), "inventory")
+        );
+
+        ModelLoader.setCustomModelResourceLocation(
+                Item.getItemFromBlock(ModBlocks.FUEL_GENERATOR_MK3), 0,
+                new ModelResourceLocation(ModBlocks.FUEL_GENERATOR_MK3.getRegistryName(), "inventory")
+        );
+
+        ModelLoader.setCustomModelResourceLocation(
+                Item.getItemFromBlock(ModBlocks.FUEL_GENERATOR_MK4), 0,
+                new ModelResourceLocation(ModBlocks.FUEL_GENERATOR_MK4.getRegistryName(), "inventory")
+        );
+
+        ModelLoader.setCustomModelResourceLocation(
+                Item.getItemFromBlock(ModBlocks.FUEL_GENERATOR_MK5), 0,
+                new ModelResourceLocation(ModBlocks.FUEL_GENERATOR_MK5.getRegistryName(), "inventory")
+        );
+
+        ModelLoader.setCustomModelResourceLocation(
+                Item.getItemFromBlock(ModBlocks.FUEL_GENERATOR_MK6), 0,
+                new ModelResourceLocation(ModBlocks.FUEL_GENERATOR_MK6.getRegistryName(), "inventory")
+        );
+
+        ModelLoader.setCustomModelResourceLocation(
+                Item.getItemFromBlock(ModBlocks.FUEL_GENERATOR_CREATIVE), 0,
+                new ModelResourceLocation(ModBlocks.FUEL_GENERATOR_CREATIVE.getRegistryName(), "inventory")
+        );
     }}
