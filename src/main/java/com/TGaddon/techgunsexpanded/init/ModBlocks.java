@@ -17,6 +17,8 @@ public class ModBlocks {
     public static Block FUEL_GENERATOR_MK5;
     public static Block FUEL_GENERATOR_MK6;
     public static Block FUEL_GENERATOR_CREATIVE;
+    public static Block ENRICHED_URANIUM_BLOCK;
+    public static Block CREATIVE_MECHANISM_BLOCK;
 
     public static ItemBlock TUNGSTEN_CARBIDE_ORE_ITEM;
     public static ItemBlock TUNGSTEN_CARBIDE_BLOCK_ITEM;
@@ -27,6 +29,8 @@ public class ModBlocks {
     public static ItemBlock FUEL_GENERATOR_MK5_ITEM;
     public static ItemBlock FUEL_GENERATOR_MK6_ITEM;
     public static ItemBlock FUEL_GENERATOR_CREATIVE_ITEM;
+    public static ItemBlock ENRICHED_URANIUM_BLOCK_ITEM;
+    public static ItemBlock CREATIVE_MECHANISM_BLOCK_ITEM;
 
     public static void register() {
         TUNGSTEN_CARBIDE_ORE = new Block(Material.ROCK)
@@ -76,4 +80,25 @@ public class ModBlocks {
         FUEL_GENERATOR_CREATIVE = new BlockFuelGeneratorCreative();
         FUEL_GENERATOR_CREATIVE_ITEM = new ItemBlock(FUEL_GENERATOR_CREATIVE);
         FUEL_GENERATOR_CREATIVE_ITEM.setRegistryName(FUEL_GENERATOR_CREATIVE.getRegistryName());
+
+        ENRICHED_URANIUM_BLOCK = new Block(Material.IRON)
+                .setUnlocalizedName("enriched_uranium_block")
+                .setRegistryName(TechgunsExpanded.MODID, "enriched_uranium_block")
+                .setHardness(5.0f)
+                .setResistance(10.0f)
+                .setCreativeTab(Techguns.tabTechgun);
+
+        ENRICHED_URANIUM_BLOCK_ITEM = new ItemBlock(ENRICHED_URANIUM_BLOCK);
+        ENRICHED_URANIUM_BLOCK_ITEM.setRegistryName(ENRICHED_URANIUM_BLOCK.getRegistryName());
+
+        // Diamond block hardness (5.0), 2x obsidian blast resistance (6000 * 2 = 12000)
+        CREATIVE_MECHANISM_BLOCK = new Block(Material.IRON)
+                .setUnlocalizedName("creative_mechanism_block")
+                .setRegistryName(TechgunsExpanded.MODID, "creative_mechanism_block")
+                .setHardness(5.0f)
+                .setResistance(12000.0f)
+                .setCreativeTab(Techguns.tabTechgun);
+
+        CREATIVE_MECHANISM_BLOCK_ITEM = new ItemBlock(CREATIVE_MECHANISM_BLOCK);
+        CREATIVE_MECHANISM_BLOCK_ITEM.setRegistryName(CREATIVE_MECHANISM_BLOCK.getRegistryName());
 }}

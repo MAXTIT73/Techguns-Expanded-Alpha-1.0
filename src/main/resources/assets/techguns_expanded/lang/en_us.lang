@@ -1,7 +1,14 @@
 item.bucket_oil.name=Bucket of Oil
 tile.oil.name=Oil
 item.tungsten_carbide_ingot.name=Tungsten Carbide Ingot
+item.diamond_wire.name=Diamond Wire
+item.cooling_liquid_bottle.name=Cooling Liquid Bottle
+item.titanium_superwire.name=Titanium Superwire
+item.anoda_superwire.name=Anoda Technology Superwire
+item.ultratanium_ingot.name=Ultratanium Ingot
 tile.tungsten_carbide_ore.name=Tungsten Carbide Ore
+tile.enriched_uranium_block.name=Enriched Uranium Block
+tile.creative_mechanism_block.name=Creative Mechanism Block
 tile.tungsten_carbide_block.name=Tungsten Carbide Block
 tile.fuel_generator.name=Fuel Generator
 tile.fuel_generator_mk2.name=Fuel Generator Mk2

@@ -46,6 +46,31 @@ public final class ClientProxy {
                 new ModelResourceLocation(ModItems.TUNGSTEN_CARBIDE_INGOT.getRegistryName(), "inventory")
         );
 
+        ModelLoader.setCustomModelResourceLocation(
+                ModItems.DIAMOND_WIRE, 0,
+                new ModelResourceLocation(ModItems.DIAMOND_WIRE.getRegistryName(), "inventory")
+        );
+
+        ModelLoader.setCustomModelResourceLocation(
+                ModItems.TITANIUM_SUPERWIRE, 0,
+                new ModelResourceLocation(ModItems.TITANIUM_SUPERWIRE.getRegistryName(), "inventory")
+        );
+
+        ModelLoader.setCustomModelResourceLocation(
+                ModItems.COOLING_LIQUID_BOTTLE, 0,
+                new ModelResourceLocation(ModItems.COOLING_LIQUID_BOTTLE.getRegistryName(), "inventory")
+        );
+
+        ModelLoader.setCustomModelResourceLocation(
+                ModItems.ANODA_SUPERWIRE, 0,
+                new ModelResourceLocation(ModItems.ANODA_SUPERWIRE.getRegistryName(), "inventory")
+        );
+
+        ModelLoader.setCustomModelResourceLocation(
+                ModItems.ULTRATANIUM_INGOT, 0,
+                new ModelResourceLocation(ModItems.ULTRATANIUM_INGOT.getRegistryName(), "inventory")
+        );
+
 
         ModelLoader.setCustomModelResourceLocation(
                 Item.getItemFromBlock(ModBlocks.TUNGSTEN_CARBIDE_BLOCK), 0,
@@ -91,5 +116,15 @@ public final class ClientProxy {
         ModelLoader.setCustomModelResourceLocation(
                 Item.getItemFromBlock(ModBlocks.FUEL_GENERATOR_CREATIVE), 0,
                 new ModelResourceLocation(ModBlocks.FUEL_GENERATOR_CREATIVE.getRegistryName(), "inventory")
+        );
+
+        ModelLoader.setCustomModelResourceLocation(
+                Item.getItemFromBlock(ModBlocks.ENRICHED_URANIUM_BLOCK), 0,
+                new ModelResourceLocation(ModBlocks.ENRICHED_URANIUM_BLOCK.getRegistryName(), "inventory")
+        );
+
+        ModelLoader.setCustomModelResourceLocation(
+                Item.getItemFromBlock(ModBlocks.CREATIVE_MECHANISM_BLOCK), 0,
+                new ModelResourceLocation(ModBlocks.CREATIVE_MECHANISM_BLOCK.getRegistryName(), "inventory")
         );
     }}

@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "techguns_expanded:blocks/creative_mechanism_block"
+  }
+}
