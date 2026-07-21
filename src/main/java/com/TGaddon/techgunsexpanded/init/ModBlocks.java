@@ -42,6 +42,10 @@ public class ModBlocks {
                 .setResistance(5.0f)
                 .setCreativeTab(Techguns.tabTechgun);
 
+        // Diamond pickaxe or better. Level 3 = diamond (0 wood/gold, 1 stone, 2 iron).
+        // setHarvestLevel returns void in 1.12.2, so it cannot be chained above.
+        TUNGSTEN_CARBIDE_ORE.setHarvestLevel("pickaxe", 3);
+
         TUNGSTEN_CARBIDE_BLOCK = new Block(Material.IRON)
                 .setUnlocalizedName("tungsten_carbide_block")
                 .setRegistryName(TechgunsExpanded.MODID, "tungsten_carbide_block")
