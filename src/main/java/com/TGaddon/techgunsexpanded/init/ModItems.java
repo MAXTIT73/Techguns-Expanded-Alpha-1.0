@@ -12,6 +12,7 @@ public class ModItems {
     public static Item COOLING_LIQUID_BOTTLE;
     public static Item ANODA_SUPERWIRE;
     public static Item ULTRATANIUM_INGOT;
+    public static Item THUMB_TUNGSTEN_ORE;
 
     public static void register() {
         TUNGSTEN_CARBIDE_INGOT = new Item()
@@ -42,6 +43,11 @@ public class ModItems {
         ULTRATANIUM_INGOT = new Item()
                 .setUnlocalizedName("ultratanium_ingot")
                 .setRegistryName(TechgunsExpanded.MODID, "ultratanium_ingot")
+                .setCreativeTab(Techguns.tabTechgun);
+
+        THUMB_TUNGSTEN_ORE = new Item()
+                .setUnlocalizedName("thumb_tungsten_ore")
+                .setRegistryName(TechgunsExpanded.MODID, "thumb_tungsten_ore")
                 .setCreativeTab(Techguns.tabTechgun);
     }
 }

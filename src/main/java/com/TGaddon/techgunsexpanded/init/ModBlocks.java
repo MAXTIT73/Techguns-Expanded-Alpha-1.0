@@ -19,6 +19,7 @@ public class ModBlocks {
     public static Block FUEL_GENERATOR_CREATIVE;
     public static Block ENRICHED_URANIUM_BLOCK;
     public static Block CREATIVE_MECHANISM_BLOCK;
+    public static Block ADVANCED_METAL_PRESS;
 
     public static ItemBlock TUNGSTEN_CARBIDE_ORE_ITEM;
     public static ItemBlock TUNGSTEN_CARBIDE_BLOCK_ITEM;
@@ -31,6 +32,7 @@ public class ModBlocks {
     public static ItemBlock FUEL_GENERATOR_CREATIVE_ITEM;
     public static ItemBlock ENRICHED_URANIUM_BLOCK_ITEM;
     public static ItemBlock CREATIVE_MECHANISM_BLOCK_ITEM;
+    public static ItemBlock ADVANCED_METAL_PRESS_ITEM;
 
     public static void register() {
         TUNGSTEN_CARBIDE_ORE = new Block(Material.ROCK)
@@ -44,7 +46,7 @@ public class ModBlocks {
                 .setUnlocalizedName("tungsten_carbide_block")
                 .setRegistryName(TechgunsExpanded.MODID, "tungsten_carbide_block")
                 .setHardness(5.0f)
-                .setResistance(10.0f)
+                .setResistance(9000.0f)
                 .setCreativeTab(Techguns.tabTechgun);
 
         TUNGSTEN_CARBIDE_ORE_ITEM = new ItemBlock(TUNGSTEN_CARBIDE_ORE);
@@ -101,4 +103,8 @@ public class ModBlocks {
 
         CREATIVE_MECHANISM_BLOCK_ITEM = new ItemBlock(CREATIVE_MECHANISM_BLOCK);
         CREATIVE_MECHANISM_BLOCK_ITEM.setRegistryName(CREATIVE_MECHANISM_BLOCK.getRegistryName());
+
+        ADVANCED_METAL_PRESS = new BlockAdvancedMetalPress();
+        ADVANCED_METAL_PRESS_ITEM = new ItemBlock(ADVANCED_METAL_PRESS);
+        ADVANCED_METAL_PRESS_ITEM.setRegistryName(ADVANCED_METAL_PRESS.getRegistryName());
 }}

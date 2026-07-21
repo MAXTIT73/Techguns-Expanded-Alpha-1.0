@@ -11,6 +11,8 @@ import com.TGaddon.techgunsexpanded.init.TileEntityFuelGeneratorMk4;
 import com.TGaddon.techgunsexpanded.init.TileEntityFuelGeneratorMk5;
 import com.TGaddon.techgunsexpanded.init.TileEntityFuelGeneratorMk6;
 import com.TGaddon.techgunsexpanded.init.TileEntityFuelGeneratorCreative;
+import com.TGaddon.techgunsexpanded.init.TileEntityAdvancedMetalPress;
+import com.TGaddon.techgunsexpanded.world.WorldGenTungstenCarbideOre;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -19,9 +21,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fluids.Fluid;
 import techguns.tileentities.operation.ChemLabRecipes;
 import techguns.tileentities.operation.FabricatorRecipe;
 import techguns.tileentities.operation.MetalPressRecipes;
+import techguns.tileentities.operation.ReactionChamberRecipe;
 import techguns.util.ItemStackOreDict;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -66,7 +70,11 @@ public class TechgunsExpanded
                 new ResourceLocation(MODID, "fuel_generator_mk6"));
         GameRegistry.registerTileEntity(TileEntityFuelGeneratorCreative.class,
                 new ResourceLocation(MODID, "fuel_generator_creative"));
+        GameRegistry.registerTileEntity(TileEntityAdvancedMetalPress.class,
+                new ResourceLocation(MODID, "advanced_metal_press"));
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
+        GameRegistry.registerWorldGenerator(new WorldGenTungstenCarbideOre(), 0);
+        logger.info("[TechgunsExpanded] Tungsten Carbide Ore world generator registered (Nether, dim -1)");
     }
 
     @EventHandler
@@ -108,6 +116,31 @@ public class TechgunsExpanded
                 powderUranium, 3,
                 plateTungsten, 4,
                 new ItemStack(ModItems.ULTRATANIUM_INGOT), 1
+            );
+        }
+
+        // Reaction Chamber: 1x Tungsten Carbide Ore + Creeper Acid (5000mb, consumes 250mb) + Heatray Focus
+        //   -> 1x Thumb Tungsten Ore + 2x Titanium Ore
+        Fluid creeperAcid = FluidRegistry.getFluid("creeper_acid");
+        if (itemShared != null && creeperAcid != null) {
+            ReactionChamberRecipe.addRecipe(
+                "techguns_expanded:thumb_tungsten_ore",
+                new ItemStackOreDict(new ItemStack(ModBlocks.TUNGSTEN_CARBIDE_ORE), 1),
+                new ItemStack(itemShared, 1, 104),         // Heatray Focus (meta 104)
+                creeperAcid,
+                new ItemStack[]{
+                    new ItemStack(ModItems.THUMB_TUNGSTEN_ORE, 1),
+                    new ItemStack(itemShared, 2, 78)        // 2x Titanium Ore (meta 78)
+                },
+                2,                                          // ticks (Recipe Ticks)
+                1,                                          // requiredCompletion
+                6,                                          // preferredIntensity (Starting Intensity)
+                0,                                          // intensityMargin
+                5,                                          // liquidLevel (50% = 5 buckets = 5000mb)
+                250,                                        // liquidConsumtion (mb consumed)
+                0.0f,                                       // instability
+                ReactionChamberRecipe.RiskType.BREAK_ITEM,
+                1000                                        // RF per reaction tick
             );
         }
 

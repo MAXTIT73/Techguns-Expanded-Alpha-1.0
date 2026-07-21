@@ -33,6 +33,7 @@ public final class RegistryHandler {
         event.getRegistry().register(ModBlocks.FUEL_GENERATOR_CREATIVE);
         event.getRegistry().register(ModBlocks.ENRICHED_URANIUM_BLOCK);
         event.getRegistry().register(ModBlocks.CREATIVE_MECHANISM_BLOCK);
+        event.getRegistry().register(ModBlocks.ADVANCED_METAL_PRESS);
     }
 
     @SubscribeEvent
@@ -44,6 +45,7 @@ public final class RegistryHandler {
         event.getRegistry().register(ModItems.COOLING_LIQUID_BOTTLE);
         event.getRegistry().register(ModItems.ANODA_SUPERWIRE);
         event.getRegistry().register(ModItems.ULTRATANIUM_INGOT);
+        event.getRegistry().register(ModItems.THUMB_TUNGSTEN_ORE);
         event.getRegistry().register(ModBlocks.TUNGSTEN_CARBIDE_ORE_ITEM);
         event.getRegistry().register(ModBlocks.TUNGSTEN_CARBIDE_BLOCK_ITEM);
         event.getRegistry().register(ModBlocks.FUEL_GENERATOR_ITEM);
@@ -55,6 +57,7 @@ public final class RegistryHandler {
         event.getRegistry().register(ModBlocks.FUEL_GENERATOR_CREATIVE_ITEM);
         event.getRegistry().register(ModBlocks.ENRICHED_URANIUM_BLOCK_ITEM);
         event.getRegistry().register(ModBlocks.CREATIVE_MECHANISM_BLOCK_ITEM);
+        event.getRegistry().register(ModBlocks.ADVANCED_METAL_PRESS_ITEM);
     }
 
     @SubscribeEvent
@@ -133,6 +136,17 @@ public final class RegistryHandler {
             'G', new ItemStack(ModBlocks.FUEL_GENERATOR_MK4)
         );
 
+        // Tungsten Carbide Block: 9x Tungsten Carbide Ingot
+        GameRegistry.addShapedRecipe(
+            new ResourceLocation(TechgunsExpanded.MODID, "tungsten_carbide_block"),
+            null,
+            new ItemStack(ModBlocks.TUNGSTEN_CARBIDE_BLOCK),
+            "TTT",
+            "TTT",
+            "TTT",
+            'T', ModItems.TUNGSTEN_CARBIDE_INGOT
+        );
+
         // Anoda Technology Superwire: 8x Titanium Superwire + Plasma Generator (meta 131)
         GameRegistry.addShapedRecipe(
             new ResourceLocation(TechgunsExpanded.MODID, "anoda_superwire"),
@@ -193,6 +207,13 @@ public final class RegistryHandler {
             'D', ModItems.DIAMOND_WIRE,
             'C', ModItems.COOLING_LIQUID_BOTTLE,
             'T', new ItemStack(itemShared, 1, 85)
+        );
+
+        // Furnace: Thumb Tungsten Ore -> Tungsten Carbide Ingot
+        GameRegistry.addSmelting(
+            ModItems.THUMB_TUNGSTEN_ORE,
+            new ItemStack(ModItems.TUNGSTEN_CARBIDE_INGOT),
+            1.0f
         );
 
         // Titanium Plate = metadata 54

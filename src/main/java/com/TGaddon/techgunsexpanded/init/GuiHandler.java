@@ -5,6 +5,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
+import techguns.gui.MetalPressGui;
+import techguns.gui.containers.MetalPressContainer;
+import techguns.tileentities.MetalPressTileEnt;
 
 public class GuiHandler implements IGuiHandler {
 
@@ -32,6 +35,9 @@ public class GuiHandler implements IGuiHandler {
         if (id == 6 && te instanceof TileEntityFuelGeneratorCreative) {
             return new ContainerFuelGenerator(player.inventory, (TileEntityFuelGeneratorCreative) te);
         }
+        if (id == 7 && te instanceof MetalPressTileEnt) {
+            return new MetalPressContainer(player.inventory, (MetalPressTileEnt) te);
+        }
         return null;
     }
 
@@ -58,6 +64,9 @@ public class GuiHandler implements IGuiHandler {
         }
         if (id == 6 && te instanceof TileEntityFuelGeneratorCreative) {
             return new GuiFuelGenerator(player.inventory, (TileEntityFuelGeneratorCreative) te);
+        }
+        if (id == 7 && te instanceof MetalPressTileEnt) {
+            return new MetalPressGui(player.inventory, (MetalPressTileEnt) te);
         }
         return null;
     }

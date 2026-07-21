@@ -71,6 +71,11 @@ public final class ClientProxy {
                 new ModelResourceLocation(ModItems.ULTRATANIUM_INGOT.getRegistryName(), "inventory")
         );
 
+        ModelLoader.setCustomModelResourceLocation(
+                ModItems.THUMB_TUNGSTEN_ORE, 0,
+                new ModelResourceLocation(ModItems.THUMB_TUNGSTEN_ORE.getRegistryName(), "inventory")
+        );
+
 
         ModelLoader.setCustomModelResourceLocation(
                 Item.getItemFromBlock(ModBlocks.TUNGSTEN_CARBIDE_BLOCK), 0,
@@ -126,5 +131,10 @@ public final class ClientProxy {
         ModelLoader.setCustomModelResourceLocation(
                 Item.getItemFromBlock(ModBlocks.CREATIVE_MECHANISM_BLOCK), 0,
                 new ModelResourceLocation(ModBlocks.CREATIVE_MECHANISM_BLOCK.getRegistryName(), "inventory")
+        );
+
+        ModelLoader.setCustomModelResourceLocation(
+                Item.getItemFromBlock(ModBlocks.ADVANCED_METAL_PRESS), 0,
+                new ModelResourceLocation(ModBlocks.ADVANCED_METAL_PRESS.getRegistryName(), "inventory")
         );
     }}
