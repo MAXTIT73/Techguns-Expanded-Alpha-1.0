@@ -10,8 +10,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraft.creativetab.CreativeTabs;
+import techguns.Techguns;
 
 public class BlockFuelGeneratorCreative extends Block implements ITileEntityProvider {
 
@@ -19,9 +20,19 @@ public class BlockFuelGeneratorCreative extends Block implements ITileEntityProv
         super(Material.IRON);
         setUnlocalizedName("fuel_generator_creative");
         setRegistryName(TechgunsExpanded.MODID, "fuel_generator_creative");
-        setHardness(-1.0f);        // нельзя сломать в выживании
-        setResistance(6000000.0f); // как бедрок
-        setCreativeTab(CreativeTabs.MISC);
+        setHardness(3.5f);
+        setResistance(8.0f);
+        setCreativeTab(Techguns.tabTechgun);
+    }
+
+    /**
+     * Generators drop when broken with anything, including bare hands.
+     * Material.IRON calls setRequiresTool() in vanilla, which would otherwise
+     * gate the drop behind a pickaxe.
+     */
+    @Override
+    public boolean canHarvestBlock(IBlockAccess world, BlockPos pos, EntityPlayer player) {
+        return true;
     }
 
     @Override

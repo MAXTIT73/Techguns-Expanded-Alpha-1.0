@@ -37,7 +37,15 @@ import techguns.Techguns;
 import techguns.TGFluids;
 import techguns.blocks.EnumOreClusterType;
 
-@Mod(modid = TechgunsExpanded.MODID, name = TechgunsExpanded.NAME, version = TechgunsExpanded.VERSION)
+@Mod(
+    modid = TechgunsExpanded.MODID,
+    name = TechgunsExpanded.NAME,
+    version = TechgunsExpanded.VERSION,
+    // Techguns is a hard dependency: this mod calls its classes directly, so
+    // Forge must load Techguns first and refuse to start (with a clear "missing
+    // mod" screen) instead of crashing with NoClassDefFoundError if it's absent.
+    dependencies = "required-after:techguns"
+)
 public class TechgunsExpanded
 {
     public static final String MODID = "techguns_expanded";

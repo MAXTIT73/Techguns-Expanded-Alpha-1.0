@@ -18,8 +18,18 @@ import javax.annotation.Nullable;
 public class TileEntityFuelGenerator extends TileEntity implements ITickable {
 
     public static final int MAX_ENERGY = 100000;
-    public static final int RF_PER_TICK = 30;
-    public static final int TRANSFER_RATE = 120;
+    public static final int RF_PER_TICK = 75; // 30 * 2.5
+
+    /**
+     * Multiplier applied to a tier's generation rate to get its per-side output
+     * cap. Must be > 1 so a generator can both push what it makes and drain a
+     * buffer that filled up while nothing was connected.
+     *
+     * This used to be a flat TRANSFER_RATE = 120 shared by every tier, which
+     * silently capped Mk3 and above at 120 RF/t and made all high tiers
+     * perform identically.
+     */
+    public static final int TRANSFER_MULTIPLIER = 4;
 
     private int energyStored = 0;
     private int burnTime = 0;
@@ -90,7 +100,7 @@ public class TileEntityFuelGenerator extends TileEntity implements ITickable {
                 if (neighbor != null && neighbor.hasCapability(CapabilityEnergy.ENERGY, facing.getOpposite())) {
                     IEnergyStorage neighborStorage = neighbor.getCapability(CapabilityEnergy.ENERGY, facing.getOpposite());
                     if (neighborStorage != null && neighborStorage.canReceive()) {
-                        int toSend = Math.min(energyStored, TRANSFER_RATE);
+                        int toSend = Math.min(energyStored, getTransferRate());
                         int sent = neighborStorage.receiveEnergy(toSend, false);
                         if (sent > 0) {
                             energyStored -= sent;
@@ -138,6 +148,13 @@ public class TileEntityFuelGenerator extends TileEntity implements ITickable {
     }
 
     protected int getRfPerTick() { return RF_PER_TICK; }
+
+    /**
+     * Per-side output cap. Scales with the tier's generation rate so higher
+     * tiers actually deliver their extra output instead of choking on a
+     * shared flat limit.
+     */
+    protected int getTransferRate() { return getRfPerTick() * TRANSFER_MULTIPLIER; }
     public String getGuiTitle() { return "Fuel Generator"; }
 
     public ItemStackHandler getInventory() { return inventory; }

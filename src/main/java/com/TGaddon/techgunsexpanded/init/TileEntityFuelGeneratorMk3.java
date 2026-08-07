@@ -2,7 +2,7 @@ package com.TGaddon.techgunsexpanded.init;
 
 public class TileEntityFuelGeneratorMk3 extends TileEntityFuelGenerator {
 
-    public static final int RF_PER_TICK_MK3 = 66; // 30 * 2.2
+    public static final int RF_PER_TICK_MK3 = 165; // 66 * 2.5
 
     @Override
     protected int getRfPerTick() {
