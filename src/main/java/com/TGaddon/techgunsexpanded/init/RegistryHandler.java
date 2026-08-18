@@ -46,6 +46,14 @@ public final class RegistryHandler {
         event.getRegistry().register(ModItems.ANODA_SUPERWIRE);
         event.getRegistry().register(ModItems.ULTRATANIUM_INGOT);
         event.getRegistry().register(ModItems.THUMB_TUNGSTEN_ORE);
+        event.getRegistry().register(ModItems.NETHER_ARMOR_PLATING);
+        event.getRegistry().register(ModItems.ADVANCED_CYBERNETIC_PARTS);
+        event.getRegistry().register(ModItems.POWER_ARMOR_PLATING_MK2);
+        event.getRegistry().register(ModItems.ELITE_CYBERNETIC_PARTS);
+        event.getRegistry().register(ModItems.MECHANICAL_PARTS_TITAN);
+        event.getRegistry().register(ModItems.TUNGSTEN_CARBIDE_PLATE);
+        event.getRegistry().register(ModItems.MECHANICAL_PARTS_TUNGSTEN_CARBIDE);
+        event.getRegistry().register(ModItems.OVERHEATED_BLAZE_ROD);
         event.getRegistry().register(ModBlocks.TUNGSTEN_CARBIDE_ORE_ITEM);
         event.getRegistry().register(ModBlocks.TUNGSTEN_CARBIDE_BLOCK_ITEM);
         event.getRegistry().register(ModBlocks.FUEL_GENERATOR_ITEM);
@@ -229,6 +237,222 @@ public final class RegistryHandler {
             'P', new ItemStack(itemShared, 1, 54),
             'G', new ItemStack(ModBlocks.FUEL_GENERATOR_MK5)
         );
+
+        // The Infiltrator: upgrade an M4 Assault Rifle into the silenced variant.
+        //   [Steel Plate 50] [Glass Pane]     [Steel Plate 50]
+        //   [Redstone]       [M4 Assault Rifle][Plastic Gun Stock 43]
+        //   [Redstone]       [Mech. Parts Hardened 58] [ - ]
+        Item m4            = Item.REGISTRY.getObject(new ResourceLocation("techguns", "m4"));
+        Item m4Infiltrator = Item.REGISTRY.getObject(new ResourceLocation("techguns", "m4_infiltrator"));
+        if (m4 != null && m4Infiltrator != null) {
+            GameRegistry.addShapedRecipe(
+                new ResourceLocation(TechgunsExpanded.MODID, "m4_infiltrator"),
+                null,
+                new ItemStack(m4Infiltrator),
+                "SGS",
+                "RMP",
+                "RH ",
+                'S', new ItemStack(itemShared, 1, 50),  // Steel Plate
+                'G', new ItemStack(Blocks.GLASS_PANE),  // Glass Pane
+                'R', new ItemStack(Items.REDSTONE),     // Redstone
+                'M', new ItemStack(m4),                 // M4 Assault Rifle
+                'P', new ItemStack(itemShared, 1, 43),  // Plastic Gun Stock
+                'H', new ItemStack(itemShared, 1, 58)   // Mechanical Parts (Hardened)
+            );
+        }
+
+        // Nether Combat Boots (techguns t4 praetor boots):
+        //   [ - ]                 [Diamond Wire]        [ - ]
+        //   [Adv. Cybernetic Parts][ - ]                [Adv. Cybernetic Parts]
+        //   [Nether Armor Plating][ - ]                 [Nether Armor Plating]
+        Item netherCombatBoots = Item.REGISTRY.getObject(new ResourceLocation("techguns", "t4_praetor_boots"));
+        if (netherCombatBoots != null) {
+            GameRegistry.addShapedRecipe(
+                new ResourceLocation(TechgunsExpanded.MODID, "nether_combat_boots"),
+                null,
+                new ItemStack(netherCombatBoots),
+                " W ",
+                "C C",
+                "P P",
+                'W', ModItems.DIAMOND_WIRE,               // Diamond Wire
+                'C', ModItems.ADVANCED_CYBERNETIC_PARTS,  // Advanced Cybernetic Parts
+                'P', ModItems.NETHER_ARMOR_PLATING        // Nether Armor Plating
+            );
+        }
+
+        // Nether Combat Chestplate (techguns t4 praetor chestplate):
+        //   [Nether Armor Plating] [ - ]          [Nether Armor Plating]
+        //   [Adv. Cybernetic Parts][Diamond Wire] [Adv. Cybernetic Parts]
+        //   [Nether Armor Plating] [Nether Armor Plating][Nether Armor Plating]
+        Item netherCombatChestplate = Item.REGISTRY.getObject(new ResourceLocation("techguns", "t4_praetor_chestplate"));
+        if (netherCombatChestplate != null) {
+            GameRegistry.addShapedRecipe(
+                new ResourceLocation(TechgunsExpanded.MODID, "nether_combat_chestplate"),
+                null,
+                new ItemStack(netherCombatChestplate),
+                "P P",
+                "CWC",
+                "PPP",
+                'P', ModItems.NETHER_ARMOR_PLATING,       // Nether Armor Plating
+                'C', ModItems.ADVANCED_CYBERNETIC_PARTS,  // Advanced Cybernetic Parts
+                'W', ModItems.DIAMOND_WIRE                // Diamond Wire
+            );
+        }
+
+        // Nether Combat Leggings (techguns t4 praetor leggings):
+        //   [Nether Armor Plating] [Diamond Wire] [Nether Armor Plating]
+        //   [Adv. Cybernetic Parts][ - ]          [Adv. Cybernetic Parts]
+        //   [Nether Armor Plating] [ - ]          [Nether Armor Plating]
+        Item netherCombatLeggings = Item.REGISTRY.getObject(new ResourceLocation("techguns", "t4_praetor_leggings"));
+        if (netherCombatLeggings != null) {
+            GameRegistry.addShapedRecipe(
+                new ResourceLocation(TechgunsExpanded.MODID, "nether_combat_leggings"),
+                null,
+                new ItemStack(netherCombatLeggings),
+                "PWP",
+                "C C",
+                "P P",
+                'P', ModItems.NETHER_ARMOR_PLATING,       // Nether Armor Plating
+                'C', ModItems.ADVANCED_CYBERNETIC_PARTS,  // Advanced Cybernetic Parts
+                'W', ModItems.DIAMOND_WIRE                // Diamond Wire
+            );
+        }
+
+        // Nether Combat Helmet (techguns t4 praetor helmet):
+        //   [Adv. Cybernetic Parts][Nether Armor Plating][Adv. Cybernetic Parts]
+        //   [Nether Armor Plating] [Tactical Mask]       [Nether Armor Plating]
+        //   [ - ]                  [Diamond Wire]        [ - ]
+        Item tacticalMask       = Item.REGISTRY.getObject(new ResourceLocation("techguns", "tacticalmask"));
+        Item netherCombatHelmet = Item.REGISTRY.getObject(new ResourceLocation("techguns", "t4_praetor_helmet"));
+        if (tacticalMask != null && netherCombatHelmet != null) {
+            GameRegistry.addShapedRecipe(
+                new ResourceLocation(TechgunsExpanded.MODID, "nether_combat_helmet"),
+                null,
+                new ItemStack(netherCombatHelmet),
+                "CPC",
+                "PMP",
+                " W ",
+                'C', ModItems.ADVANCED_CYBERNETIC_PARTS,  // Advanced Cybernetic Parts
+                'P', ModItems.NETHER_ARMOR_PLATING,       // Nether Armor Plating
+                'M', new ItemStack(tacticalMask),         // Tactical Mask
+                'W', ModItems.DIAMOND_WIRE                // Diamond Wire
+            );
+        }
+
+        // Advanced Cybernetic Parts:
+        //   [Cybernetic Parts] [Diamond Wire]     [ - ]
+        //   [Titanium Ingot]   [Cybernetic Parts] [ - ]
+        //   [ - ]              [ - ]              [ - ]
+        GameRegistry.addShapedRecipe(
+            new ResourceLocation(TechgunsExpanded.MODID, "advanced_cybernetic_parts"),
+            null,
+            new ItemStack(ModItems.ADVANCED_CYBERNETIC_PARTS),
+            "CW",
+            "TC",
+            'C', new ItemStack(itemShared, 1, 69),  // Cybernetic Parts
+            'W', ModItems.DIAMOND_WIRE,             // Diamond Wire
+            'T', new ItemStack(itemShared, 1, 85)   // Titanium Ingot
+        );
+
+        // Power Armor Mk2 Boots (techguns t4 power boots):
+        //   [ - ]                    [Titanium Superwire]     [ - ]
+        //   [Elite Cybernetic Parts] [ - ]                    [Elite Cybernetic Parts]
+        //   [Power Armor Plating Mk2][ - ]                    [Power Armor Plating Mk2]
+        Item powerBootsMk2 = Item.REGISTRY.getObject(new ResourceLocation("techguns", "t4_power_boots"));
+        if (powerBootsMk2 != null) {
+            GameRegistry.addShapedRecipe(
+                new ResourceLocation(TechgunsExpanded.MODID, "power_armor_mk2_boots"),
+                null,
+                new ItemStack(powerBootsMk2),
+                " W ",
+                "C C",
+                "P P",
+                'W', ModItems.TITANIUM_SUPERWIRE,        // Titanium Superwire
+                'C', ModItems.ELITE_CYBERNETIC_PARTS,    // Elite Cybernetic Parts
+                'P', ModItems.POWER_ARMOR_PLATING_MK2    // Power Armor Plating Mk2
+            );
+        }
+
+        // Power Armor Mk2 Leggings (techguns t4 power leggings):
+        //   [Power Armor Plating Mk2][Titanium Superwire]     [Power Armor Plating Mk2]
+        //   [Elite Cybernetic Parts] [ - ]                    [Elite Cybernetic Parts]
+        //   [Power Armor Plating Mk2][ - ]                    [Power Armor Plating Mk2]
+        Item powerLeggingsMk2 = Item.REGISTRY.getObject(new ResourceLocation("techguns", "t4_power_leggings"));
+        if (powerLeggingsMk2 != null) {
+            GameRegistry.addShapedRecipe(
+                new ResourceLocation(TechgunsExpanded.MODID, "power_armor_mk2_leggings"),
+                null,
+                new ItemStack(powerLeggingsMk2),
+                "PWP",
+                "C C",
+                "P P",
+                'P', ModItems.POWER_ARMOR_PLATING_MK2,   // Power Armor Plating Mk2
+                'W', ModItems.TITANIUM_SUPERWIRE,        // Titanium Superwire
+                'C', ModItems.ELITE_CYBERNETIC_PARTS     // Elite Cybernetic Parts
+            );
+        }
+
+        // Power Armor Mk2 Chestplate (techguns t4 power chestplate):
+        //   [Power Armor Plating Mk2][ - ]                       [Power Armor Plating Mk2]
+        //   [Elite Cybernetic Parts] [Anoda Technology Superwire][Elite Cybernetic Parts]
+        //   [Power Armor Plating Mk2][Power Armor Plating Mk2]   [Power Armor Plating Mk2]
+        Item powerChestplateMk2 = Item.REGISTRY.getObject(new ResourceLocation("techguns", "t4_power_chestplate"));
+        if (powerChestplateMk2 != null) {
+            GameRegistry.addShapedRecipe(
+                new ResourceLocation(TechgunsExpanded.MODID, "power_armor_mk2_chestplate"),
+                null,
+                new ItemStack(powerChestplateMk2),
+                "P P",
+                "CAC",
+                "PPP",
+                'P', ModItems.POWER_ARMOR_PLATING_MK2,   // Power Armor Plating Mk2
+                'C', ModItems.ELITE_CYBERNETIC_PARTS,    // Elite Cybernetic Parts
+                'A', ModItems.ANODA_SUPERWIRE            // Anoda Technology Superwire
+            );
+        }
+
+        // Power Armor Mk2 Helmet (techguns t4 power helmet):
+        //   [Elite Cybernetic Parts] [Power Armor Plating Mk2][Elite Cybernetic Parts]
+        //   [Power Armor Plating Mk2][Tactical Mask]          [Power Armor Plating Mk2]
+        //   [ - ]                    [Titanium Superwire]     [ - ]
+        Item tacticalMaskPh    = Item.REGISTRY.getObject(new ResourceLocation("techguns", "tacticalmask"));
+        Item powerHelmetMk2    = Item.REGISTRY.getObject(new ResourceLocation("techguns", "t4_power_helmet"));
+        if (tacticalMaskPh != null && powerHelmetMk2 != null) {
+            GameRegistry.addShapedRecipe(
+                new ResourceLocation(TechgunsExpanded.MODID, "power_armor_mk2_helmet"),
+                null,
+                new ItemStack(powerHelmetMk2),
+                "CPC",
+                "PMP",
+                " W ",
+                'C', ModItems.ELITE_CYBERNETIC_PARTS,    // Elite Cybernetic Parts
+                'P', ModItems.POWER_ARMOR_PLATING_MK2,   // Power Armor Plating Mk2
+                'M', new ItemStack(tacticalMaskPh),      // Tactical Mask
+                'W', ModItems.TITANIUM_SUPERWIRE         // Titanium Superwire
+            );
+        }
+
+        // Alien Blaster (techguns alienblaster):
+        //   [Laser Barrel]       [Mechanical Parts (Carbon)][Titanium Plate]
+        //   [ - ]                [Carbon Receiver]          [Diamond Wire]
+        //   [ - ]                [ - ]                      [Energy Cell]
+        Item alienBlaster = Item.REGISTRY.getObject(new ResourceLocation("techguns", "alienblaster"));
+        if (alienBlaster != null) {
+            GameRegistry.addShapedRecipe(
+                new ResourceLocation(TechgunsExpanded.MODID, "alien_blaster"),
+                null,
+                new ItemStack(alienBlaster),
+                "BMT",
+                " RW",
+                "  E",
+                'B', new ItemStack(itemShared, 1, 41),  // Laser Barrel
+                'M', new ItemStack(itemShared, 1, 59),  // Mechanical Parts (Carbon)
+                'T', new ItemStack(itemShared, 1, 54),  // Titanium Plate
+                'R', new ItemStack(itemShared, 1, 36),  // Carbon Receiver
+                'W', ModItems.DIAMOND_WIRE,             // Diamond Wire
+                'E', new ItemStack(itemShared, 1, 29)   // Energy Cell
+            );
+        }
     }
 
     // 30000 тиков = 150 предметов за ведро (~2.3 стака), лава = 20000 тиков (~1.56 стака)

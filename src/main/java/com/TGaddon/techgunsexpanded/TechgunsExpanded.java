@@ -22,6 +22,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fluids.Fluid;
+import techguns.tileentities.operation.BlastFurnaceRecipes;
 import techguns.tileentities.operation.ChemLabRecipes;
 import techguns.tileentities.operation.FabricatorRecipe;
 import techguns.tileentities.operation.MetalPressRecipes;
@@ -106,6 +107,14 @@ public class TechgunsExpanded
             );
         }
 
+        // Metal Press: 2x Tungsten Carbide Ingot -> 1x Tungsten Carbide Plate
+        MetalPressRecipes.addRecipe(
+            new ItemStack(ModItems.TUNGSTEN_CARBIDE_INGOT, 1), // 1x Tungsten Carbide Ingot
+            new ItemStack(ModItems.TUNGSTEN_CARBIDE_INGOT, 1), // 1x Tungsten Carbide Ingot
+            new ItemStack(ModItems.TUNGSTEN_CARBIDE_PLATE, 1), // output: 1x Tungsten Carbide Plate
+            false
+        );
+
         // Fabricator: 2x Diamond Block + 2x Anti Gravity Core + 3x Enriched Uranium Block + 4x Tungsten Carbide Block -> 1x Ultratanium Ingot
         if (itemShared != null) {
             ItemStackOreDict inputDiamond  = new ItemStackOreDict(new ItemStack(Blocks.DIAMOND_BLOCK), 1);
@@ -126,6 +135,135 @@ public class TechgunsExpanded
                 new ItemStack(ModItems.ULTRATANIUM_INGOT), 1
             );
         }
+
+        // Fabricator: 1x Laser Rifle + 2x Gold Wire + 1x Mechanical Parts (Carbon)
+        //   + 1x Carbon Fibers -> 1x Blaster Shotgun
+        // Slots are (main, wire, powder, plate); the Laser Rifle is the core
+        // component so it goes in the main slot.
+        Item laserRifle    = Item.REGISTRY.getObject(new ResourceLocation("techguns", "lasergun"));
+        Item blasterShotgun = Item.REGISTRY.getObject(new ResourceLocation("techguns", "scatterbeamrifle"));
+        if (itemShared != null && laserRifle != null && blasterShotgun != null) {
+            ItemStackOreDict mainLaser  = new ItemStackOreDict(new ItemStack(laserRifle), 1);
+            ItemStackOreDict wireGold   = new ItemStackOreDict(new ItemStack(itemShared, 1, 63), 1); // Gold Wire (meta 63)
+            ItemStackOreDict powderMech = new ItemStackOreDict(new ItemStack(itemShared, 1, 59), 1); // Mechanical Parts (Carbon) (meta 59)
+            ItemStackOreDict plateCarbon = new ItemStackOreDict(new ItemStack(itemShared, 1, 64), 1); // Carbon Fibers (meta 64)
+
+            // Register non-default items in the Fabricator slot whitelists so the
+            // machine accepts each one in its slot. (Main slot needs no whitelist.)
+            FabricatorRecipe.items_wireslot.add(wireGold);
+            FabricatorRecipe.items_powderslot.add(powderMech);
+            FabricatorRecipe.items_plateslot.add(plateCarbon);
+
+            FabricatorRecipe.addRecipe(
+                mainLaser,   1,
+                wireGold,    2,
+                powderMech,  1,
+                plateCarbon, 1,
+                new ItemStack(blasterShotgun), 1
+            );
+        }
+
+        // Fabricator: 4x Titanium Ingot + 4x Elite Circuit Board
+        //   + 1x Mechanical Parts (Carbon) + 4x Titanium Plate -> 1x Nether Armor Plating
+        // Slots are (main, wire, powder, plate).
+        if (itemShared != null) {
+            ItemStackOreDict mainTitanium   = new ItemStackOreDict(new ItemStack(itemShared, 1, 85), 1); // Titanium Ingot (meta 85)
+            ItemStackOreDict wireCircuit    = new ItemStackOreDict(new ItemStack(itemShared, 1, 66), 1); // Elite Circuit Board (meta 66)
+            ItemStackOreDict powderMechNap  = new ItemStackOreDict(new ItemStack(itemShared, 1, 59), 1); // Mechanical Parts (Carbon) (meta 59)
+            ItemStackOreDict plateTitanium  = new ItemStackOreDict(new ItemStack(itemShared, 1, 54), 1); // Titanium Plate (meta 54)
+
+            // Whitelist the non-default items into their slots. (Main slot needs none.)
+            FabricatorRecipe.items_wireslot.add(wireCircuit);
+            FabricatorRecipe.items_powderslot.add(powderMechNap);
+            FabricatorRecipe.items_plateslot.add(plateTitanium);
+
+            FabricatorRecipe.addRecipe(
+                mainTitanium,  4,
+                wireCircuit,   4,
+                powderMechNap, 1,
+                plateTitanium, 4,
+                new ItemStack(ModItems.NETHER_ARMOR_PLATING), 1
+            );
+        }
+
+        // Fabricator: 1x Advanced Cybernetic Parts + 2x Titanium Superwire
+        //   + 3x Titanium Ingot + 2x Elite Circuit Board -> 1x Elite Cybernetic Parts
+        // Slots are (main, wire, powder, plate); Advanced Cybernetic Parts is the
+        // core component so it goes in the main slot.
+        if (itemShared != null) {
+            ItemStackOreDict mainAdvCyb    = new ItemStackOreDict(new ItemStack(ModItems.ADVANCED_CYBERNETIC_PARTS), 1);
+            ItemStackOreDict wireSuper     = new ItemStackOreDict(new ItemStack(ModItems.TITANIUM_SUPERWIRE), 1);
+            ItemStackOreDict powderTitanium = new ItemStackOreDict(new ItemStack(itemShared, 1, 85), 1); // Titanium Ingot (meta 85)
+            ItemStackOreDict plateCircuit  = new ItemStackOreDict(new ItemStack(itemShared, 1, 66), 1); // Elite Circuit Board (meta 66)
+
+            // Whitelist the non-default items into their slots. (Main slot needs none.)
+            FabricatorRecipe.items_wireslot.add(wireSuper);
+            FabricatorRecipe.items_powderslot.add(powderTitanium);
+            FabricatorRecipe.items_plateslot.add(plateCircuit);
+
+            FabricatorRecipe.addRecipe(
+                mainAdvCyb,      1,
+                wireSuper,       2,
+                powderTitanium,  3,
+                plateCircuit,    2,
+                new ItemStack(ModItems.ELITE_CYBERNETIC_PARTS), 1
+            );
+        }
+
+        // Fabricator: 3x Tungsten Carbide Ingot + 3x Advanced Cybernetic Parts
+        //   + 1x Mechanical Parts (Tungsten Carbide) + 3x Tungsten Carbide Plate
+        //   -> 1x Power Armor Plating Mk2
+        // Slots are (main, wire, powder, plate); Tungsten Carbide Ingot is the
+        // base material so it goes in the main slot.
+        {
+            ItemStackOreDict mainTungsten  = new ItemStackOreDict(new ItemStack(ModItems.TUNGSTEN_CARBIDE_INGOT), 1);
+            ItemStackOreDict wireAdvCyb    = new ItemStackOreDict(new ItemStack(ModItems.ADVANCED_CYBERNETIC_PARTS), 1);
+            ItemStackOreDict powderMechTC  = new ItemStackOreDict(new ItemStack(ModItems.MECHANICAL_PARTS_TUNGSTEN_CARBIDE), 1);
+            ItemStackOreDict plateTC       = new ItemStackOreDict(new ItemStack(ModItems.TUNGSTEN_CARBIDE_PLATE), 1);
+
+            // Whitelist the non-default items into their slots. (Main slot needs none.)
+            FabricatorRecipe.items_wireslot.add(wireAdvCyb);
+            FabricatorRecipe.items_powderslot.add(powderMechTC);
+            FabricatorRecipe.items_plateslot.add(plateTC);
+
+            FabricatorRecipe.addRecipe(
+                mainTungsten,   3,
+                wireAdvCyb,     3,
+                powderMechTC,   1,
+                plateTC,        3,
+                new ItemStack(ModItems.POWER_ARMOR_PLATING_MK2), 1
+            );
+        }
+
+        // Metal Press: 1x Titanium Plate + 1x Blaze Rod -> 1x Mechanical Parts (Titan)
+        if (itemShared != null) {
+            MetalPressRecipes.addRecipe(
+                new ItemStack(itemShared, 1, 54),               // Titanium Plate (meta 54)
+                new ItemStack(Items.BLAZE_ROD),                 // Blaze Rod
+                new ItemStack(ModItems.MECHANICAL_PARTS_TITAN), // output
+                false
+            );
+        }
+
+        // Metal Press: 1x Tungsten Carbide Plate + 1x Overheated Blaze Rod
+        //   -> 1x Mechanical Parts (Tungsten Carbide)
+        MetalPressRecipes.addRecipe(
+            new ItemStack(ModItems.TUNGSTEN_CARBIDE_PLATE),            // Tungsten Carbide Plate
+            new ItemStack(ModItems.OVERHEATED_BLAZE_ROD),             // Overheated Blaze Rod
+            new ItemStack(ModItems.MECHANICAL_PARTS_TUNGSTEN_CARBIDE), // output
+            false
+        );
+
+        // Blast Furnace: 1x Magma Block + 1x Blaze Rod -> 1x Overheated Blaze Rod
+        // Signature (input1, input2, output, int, int); Techguns' own recipes pass
+        // a constant 10 as the first int and a per-recipe duration (ticks) as the second.
+        BlastFurnaceRecipes.addRecipe(
+            new ItemStack(Blocks.MAGMA),                    // Magma Block
+            new ItemStack(Items.BLAZE_ROD),                 // Blaze Rod
+            new ItemStack(ModItems.OVERHEATED_BLAZE_ROD),   // output
+            10,                                             // XP / heat (Techguns default)
+            200                                             // duration in ticks
+        );
 
         // Reaction Chamber: 1x Tungsten Carbide Ore + Creeper Acid (5000mb, consumes 250mb) + Heatray Focus
         //   -> 1x Thumb Tungsten Ore + 2x Titanium Ore

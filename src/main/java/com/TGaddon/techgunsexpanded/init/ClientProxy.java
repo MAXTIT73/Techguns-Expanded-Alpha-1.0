@@ -76,6 +76,46 @@ public final class ClientProxy {
                 new ModelResourceLocation(ModItems.THUMB_TUNGSTEN_ORE.getRegistryName(), "inventory")
         );
 
+        ModelLoader.setCustomModelResourceLocation(
+                ModItems.NETHER_ARMOR_PLATING, 0,
+                new ModelResourceLocation(ModItems.NETHER_ARMOR_PLATING.getRegistryName(), "inventory")
+        );
+
+        ModelLoader.setCustomModelResourceLocation(
+                ModItems.ADVANCED_CYBERNETIC_PARTS, 0,
+                new ModelResourceLocation(ModItems.ADVANCED_CYBERNETIC_PARTS.getRegistryName(), "inventory")
+        );
+
+        ModelLoader.setCustomModelResourceLocation(
+                ModItems.POWER_ARMOR_PLATING_MK2, 0,
+                new ModelResourceLocation(ModItems.POWER_ARMOR_PLATING_MK2.getRegistryName(), "inventory")
+        );
+
+        ModelLoader.setCustomModelResourceLocation(
+                ModItems.ELITE_CYBERNETIC_PARTS, 0,
+                new ModelResourceLocation(ModItems.ELITE_CYBERNETIC_PARTS.getRegistryName(), "inventory")
+        );
+
+        ModelLoader.setCustomModelResourceLocation(
+                ModItems.MECHANICAL_PARTS_TITAN, 0,
+                new ModelResourceLocation(ModItems.MECHANICAL_PARTS_TITAN.getRegistryName(), "inventory")
+        );
+
+        ModelLoader.setCustomModelResourceLocation(
+                ModItems.TUNGSTEN_CARBIDE_PLATE, 0,
+                new ModelResourceLocation(ModItems.TUNGSTEN_CARBIDE_PLATE.getRegistryName(), "inventory")
+        );
+
+        ModelLoader.setCustomModelResourceLocation(
+                ModItems.MECHANICAL_PARTS_TUNGSTEN_CARBIDE, 0,
+                new ModelResourceLocation(ModItems.MECHANICAL_PARTS_TUNGSTEN_CARBIDE.getRegistryName(), "inventory")
+        );
+
+        ModelLoader.setCustomModelResourceLocation(
+                ModItems.OVERHEATED_BLAZE_ROD, 0,
+                new ModelResourceLocation(ModItems.OVERHEATED_BLAZE_ROD.getRegistryName(), "inventory")
+        );
+
 
         ModelLoader.setCustomModelResourceLocation(
                 Item.getItemFromBlock(ModBlocks.TUNGSTEN_CARBIDE_BLOCK), 0,
