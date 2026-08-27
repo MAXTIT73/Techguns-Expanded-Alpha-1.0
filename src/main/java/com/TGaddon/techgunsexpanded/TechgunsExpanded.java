@@ -36,7 +36,11 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import org.apache.logging.log4j.Logger;
 import techguns.Techguns;
 import techguns.TGFluids;
+import techguns.TGOreClusters;
 import techguns.blocks.EnumOreClusterType;
+import techguns.items.guns.GenericGun;
+import techguns.plugins.crafttweaker.EnumGunStat;
+import net.minecraftforge.fml.common.event.FMLLoadCompleteEvent;
 
 @Mod(
     modid = TechgunsExpanded.MODID,
@@ -63,6 +67,15 @@ public class TechgunsExpanded
         instance = this;
         logger = event.getModLog();
         ModFluids.registerFluid();
+
+        // Register our oil so Techguns treats it as a valid oil AND fuel in its
+        // recipes (e.g. filling fuel tanks) — the same list other mods' oils go
+        // into. Must run in preInit, before Techguns builds those recipes during
+        // the recipe registry event. Techguns only reads these lists, never
+        // clears them, so appending is safe.
+        if (!TGFluids.oils.contains(ModFluids.OIL))  TGFluids.oils.add(ModFluids.OIL);
+        if (!TGFluids.fuels.contains(ModFluids.OIL)) TGFluids.fuels.add(ModFluids.OIL);
+
         ModItems.register();
         ModBlocks.register();
         GameRegistry.registerTileEntity(TileEntityFuelGenerator.class,
@@ -86,15 +99,82 @@ public class TechgunsExpanded
         logger.info("[TechgunsExpanded] Tungsten Carbide Ore world generator registered (Nether, dim -1)");
     }
 
+    /**
+     * Runs after every mod has finished loading, so it has the final say over
+     * which oils Techguns knows about. We force the oil worldspawn list and the
+     * OIL ore cluster to contain ONLY our oil, so Techguns' Ore Drill and oil
+     * deposits always yield our oil and never another mod's.
+     *
+     * (Recipe recognition of our oil is handled separately in preInit, which
+     * intentionally does NOT make it exclusive — other mods' oils still work in
+     * recipes, our oil is simply added to the list.)
+     */
     @EventHandler
-    public void postInit(FMLPostInitializationEvent event) {
-        TGFluids.worldspawn_oils.add(0, ModFluids.OIL);
+    public void loadComplete(FMLLoadCompleteEvent event) {
+        TGFluids.worldspawn_oils.clear();
+        TGFluids.worldspawn_oils.add(ModFluids.OIL);
+
+        TGOreClusters.OreCluster oilCluster =
+                Techguns.orecluster.getClusterForType(EnumOreClusterType.OIL);
+        if (oilCluster != null) {
+            oilCluster.getOreEntries().clear();
+        }
         Techguns.orecluster.addOreToCluster(
             new FluidStack(ModFluids.OIL, 1000),
             EnumOreClusterType.OIL,
             100
         );
 
+        rebalanceGuns();
+    }
+
+    /**
+     * v1.3 weapon rebalance. Runs in loadComplete, after Techguns has finished
+     * building its guns. DAMAGE / DAMAGE_MIN go through the official setGunStat
+     * API; pellet count (bulletcount) is not exposed by EnumGunStat, so it is
+     * set via reflection.
+     */
+    private void rebalanceGuns() {
+        // Laser Rifle: flat 12 -> flat 14 (min set too so it stays flat).
+        GenericGun laser = gun("lasergun");
+        if (laser != null) {
+            laser.setGunStat(EnumGunStat.DAMAGE, 14.0f);
+            laser.setGunStat(EnumGunStat.DAMAGE_MIN, 14.0f);
+        }
+
+        // Blaster Rifle: 10->17 close, min 8->15 far. Drop distances (25/35) unchanged.
+        GenericGun blaster = gun("blasterrifle");
+        if (blaster != null) {
+            blaster.setGunStat(EnumGunStat.DAMAGE, 17.0f);
+            blaster.setGunStat(EnumGunStat.DAMAGE_MIN, 15.0f);
+        }
+
+        // Blaster Shotgun: 6->8 per pellet (flat), pellets 4->5.
+        GenericGun scatter = gun("scatterbeamrifle");
+        if (scatter != null) {
+            scatter.setGunStat(EnumGunStat.DAMAGE, 8.0f);
+            scatter.setGunStat(EnumGunStat.DAMAGE_MIN, 8.0f);
+            setBulletCount(scatter, 5);
+        }
+    }
+
+    private static GenericGun gun(String registryName) {
+        Item it = Item.REGISTRY.getObject(new ResourceLocation("techguns", registryName));
+        return (it instanceof GenericGun) ? (GenericGun) it : null;
+    }
+
+    private void setBulletCount(GenericGun g, int count) {
+        try {
+            java.lang.reflect.Field f = GenericGun.class.getDeclaredField("bulletcount");
+            f.setAccessible(true);
+            f.setInt(g, count);
+        } catch (Exception e) {
+            logger.error("[TechgunsExpanded] Could not set bulletcount via reflection", e);
+        }
+    }
+
+    @EventHandler
+    public void postInit(FMLPostInitializationEvent event) {
         Item itemShared = Item.REGISTRY.getObject(new ResourceLocation("techguns", "itemshared"));
 
         // Metal Press: 1x Gold Wire + 1x Diamond -> 1x Diamond Wire
@@ -107,11 +187,11 @@ public class TechgunsExpanded
             );
         }
 
-        // Metal Press: 2x Tungsten Carbide Ingot -> 1x Tungsten Carbide Plate
+        // Metal Press: 2x Tungsten Carbide Ingot -> 2x Tungsten Carbide Plate
         MetalPressRecipes.addRecipe(
             new ItemStack(ModItems.TUNGSTEN_CARBIDE_INGOT, 1), // 1x Tungsten Carbide Ingot
             new ItemStack(ModItems.TUNGSTEN_CARBIDE_INGOT, 1), // 1x Tungsten Carbide Ingot
-            new ItemStack(ModItems.TUNGSTEN_CARBIDE_PLATE, 1), // output: 1x Tungsten Carbide Plate
+            new ItemStack(ModItems.TUNGSTEN_CARBIDE_PLATE, 2), // output: 2x Tungsten Carbide Plate
             false
         );
 
@@ -210,27 +290,27 @@ public class TechgunsExpanded
             );
         }
 
-        // Fabricator: 3x Tungsten Carbide Ingot + 3x Advanced Cybernetic Parts
-        //   + 1x Mechanical Parts (Tungsten Carbide) + 3x Tungsten Carbide Plate
+        // Fabricator: 2x Tungsten Carbide Ingot + 2x Advanced Cybernetic Parts
+        //   + 1x Mechanical Parts (Titan) + 2x Tungsten Carbide Plate
         //   -> 1x Power Armor Plating Mk2
         // Slots are (main, wire, powder, plate); Tungsten Carbide Ingot is the
         // base material so it goes in the main slot.
         {
-            ItemStackOreDict mainTungsten  = new ItemStackOreDict(new ItemStack(ModItems.TUNGSTEN_CARBIDE_INGOT), 1);
-            ItemStackOreDict wireAdvCyb    = new ItemStackOreDict(new ItemStack(ModItems.ADVANCED_CYBERNETIC_PARTS), 1);
-            ItemStackOreDict powderMechTC  = new ItemStackOreDict(new ItemStack(ModItems.MECHANICAL_PARTS_TUNGSTEN_CARBIDE), 1);
-            ItemStackOreDict plateTC       = new ItemStackOreDict(new ItemStack(ModItems.TUNGSTEN_CARBIDE_PLATE), 1);
+            ItemStackOreDict mainTungsten   = new ItemStackOreDict(new ItemStack(ModItems.TUNGSTEN_CARBIDE_INGOT), 1);
+            ItemStackOreDict wireAdvCyb     = new ItemStackOreDict(new ItemStack(ModItems.ADVANCED_CYBERNETIC_PARTS), 1);
+            ItemStackOreDict powderMechTitan = new ItemStackOreDict(new ItemStack(ModItems.MECHANICAL_PARTS_TITAN), 1);
+            ItemStackOreDict plateTC        = new ItemStackOreDict(new ItemStack(ModItems.TUNGSTEN_CARBIDE_PLATE), 1);
 
             // Whitelist the non-default items into their slots. (Main slot needs none.)
             FabricatorRecipe.items_wireslot.add(wireAdvCyb);
-            FabricatorRecipe.items_powderslot.add(powderMechTC);
+            FabricatorRecipe.items_powderslot.add(powderMechTitan);
             FabricatorRecipe.items_plateslot.add(plateTC);
 
             FabricatorRecipe.addRecipe(
-                mainTungsten,   3,
-                wireAdvCyb,     3,
-                powderMechTC,   1,
-                plateTC,        3,
+                mainTungsten,     2,
+                wireAdvCyb,       2,
+                powderMechTitan,  1,
+                plateTC,          2,
                 new ItemStack(ModItems.POWER_ARMOR_PLATING_MK2), 1
             );
         }

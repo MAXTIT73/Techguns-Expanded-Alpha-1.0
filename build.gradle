@@ -65,7 +65,11 @@ jar {
             "Implementation-Title": project.name,
             "Implementation-Version": "${version}",
             "Implementation-Vendor" :"examplemodsareus",
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+            // Core-mod: registers our ASM transformer (shield-block spread patch).
+            // FMLCorePluginContainsFMLMod tells Forge this jar is also a normal @Mod.
+            "FMLCorePlugin": "com.TGaddon.techgunsexpanded.core.TGECoreMod",
+            "FMLCorePluginContainsFMLMod": "true"
         ])
     }
 }

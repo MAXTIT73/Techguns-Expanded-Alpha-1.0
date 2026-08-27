@@ -2,15 +2,22 @@ package com.TGaddon.techgunsexpanded.init;
 
 import com.TGaddon.techgunsexpanded.TechgunsExpanded;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.World;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
+import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -461,5 +468,43 @@ public final class RegistryHandler {
         if (event.getItemStack().getItem() == ModFluids.OIL_BUCKET) {
             event.setBurnTime(30000);
         }
+    }
+
+    /**
+     * Lets an empty vanilla bucket scoop up a placed Oil source block.
+     *
+     * The custom OIL_BUCKET can place oil, but a plain empty bucket knows
+     * nothing about our fluid, so vanilla does nothing when you right-click
+     * spilled oil. This handler fills the empty bucket from a full source
+     * block and removes it, mirroring how water/lava pickup works.
+     */
+    @SubscribeEvent
+    public static void onFillBucket(FillBucketEvent event) {
+        if (event.getResult() != Event.Result.DEFAULT) {
+            return; // someone already handled it
+        }
+        ItemStack empty = event.getEmptyBucket();
+        if (empty == null || empty.getItem() != Items.BUCKET) {
+            return; // only plain empty buckets
+        }
+        RayTraceResult target = event.getTarget();
+        if (target == null || target.typeOfHit != RayTraceResult.Type.BLOCK) {
+            return;
+        }
+
+        World world = event.getWorld();
+        BlockPos pos = target.getBlockPos();
+        IBlockState state = world.getBlockState(pos);
+        if (state.getBlock() != ModFluids.OIL_BLOCK) {
+            return;
+        }
+        // Only a full source block (level 0) can be picked up.
+        if (state.getValue(BlockFluidBase.LEVEL) != 0) {
+            return;
+        }
+
+        world.setBlockToAir(pos);
+        event.setFilledBucket(new ItemStack(ModFluids.OIL_BUCKET));
+        event.setResult(Event.Result.ALLOW);
     }
 }
