@@ -66,6 +66,12 @@ public class TechgunsExpanded
     public void preInit(FMLPreInitializationEvent event) {
         instance = this;
         logger = event.getModLog();
+
+        // Load the JSON config for the shield-block spread penalty (see the
+        // core-mod transformer + ShieldSpreadConfig). Creates the file with
+        // defaults (0.0 = no penalty) on first run.
+        com.TGaddon.techgunsexpanded.core.ShieldSpreadConfig.load(event.getModConfigurationDirectory());
+
         ModFluids.registerFluid();
 
         // Register our oil so Techguns treats it as a valid oil AND fuel in its
@@ -156,6 +162,21 @@ public class TechgunsExpanded
             scatter.setGunStat(EnumGunStat.DAMAGE_MIN, 8.0f);
             setBulletCount(scatter, 5);
         }
+
+        // Power Hammer: melee damage x6. Melee damage isn't in EnumGunStat, so we
+        // scale the fields directly (powered 6.0 -> 36.0, unpowered 2.0 -> 12.0).
+        GenericGun powerHammer = gun("powerhammer");
+        if (powerHammer != null) {
+            scaleFloatField(powerHammer, "meleeDamagePwr", 6.0f);
+            scaleFloatField(powerHammer, "meleeDamageEmpty", 6.0f);
+        }
+
+        // Nuclear Death Ray: damage 6.0 -> 20.0, min damage 1.0 -> 3.5.
+        GenericGun nuclearDeathRay = gun("nucleardeathray");
+        if (nuclearDeathRay != null) {
+            nuclearDeathRay.setGunStat(EnumGunStat.DAMAGE, 20.0f);
+            nuclearDeathRay.setGunStat(EnumGunStat.DAMAGE_MIN, 3.5f);
+        }
     }
 
     private static GenericGun gun(String registryName) {
@@ -170,6 +191,17 @@ public class TechgunsExpanded
             f.setInt(g, count);
         } catch (Exception e) {
             logger.error("[TechgunsExpanded] Could not set bulletcount via reflection", e);
+        }
+    }
+
+    /** Multiplies a float field of a gun by a factor, reading its current value. */
+    private void scaleFloatField(GenericGun g, String field, float factor) {
+        try {
+            java.lang.reflect.Field f = GenericGun.class.getDeclaredField(field);
+            f.setAccessible(true);
+            f.setFloat(g, f.getFloat(g) * factor);
+        } catch (Exception e) {
+            logger.error("[TechgunsExpanded] Could not scale field " + field, e);
         }
     }
 

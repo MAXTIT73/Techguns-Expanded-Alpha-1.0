@@ -18,8 +18,11 @@ import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.Event;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.IForgeRegistryModifiable;
 
 @Mod.EventBusSubscriber(modid = TechgunsExpanded.MODID)
 public final class RegistryHandler {
@@ -460,6 +463,71 @@ public final class RegistryHandler {
                 'E', new ItemStack(itemShared, 1, 29)   // Energy Cell
             );
         }
+
+        // Power Hammer (techguns powerhammer):
+        //   [Steel Plate]  [ - ]                 [ - ]
+        //   [Steel Plate]  [Steel Receiver]      [Plastic Gun Stock]
+        //   [Steel Plate]  [Compressed Air Tank] [Mechanical Parts (Iron)]
+        Item powerHammer = Item.REGISTRY.getObject(new ResourceLocation("techguns", "powerhammer"));
+        if (powerHammer != null) {
+            GameRegistry.addShapedRecipe(
+                new ResourceLocation(TechgunsExpanded.MODID, "power_hammer"),
+                null,
+                new ItemStack(powerHammer),
+                "P  ",
+                "PRG",
+                "PAM",
+                'P', new ItemStack(itemShared, 1, 50),  // Steel Plate
+                'R', new ItemStack(itemShared, 1, 34),  // Steel Receiver
+                'G', new ItemStack(itemShared, 1, 43),  // Plastic Gun Stock
+                'A', new ItemStack(itemShared, 1, 23),  // Compressed Air Tank
+                'M', new ItemStack(itemShared, 1, 57)   // Mechanical Parts (Iron)
+            );
+        }
+    }
+
+    /**
+     * Replaces Techguns' default Vector crafting recipe with our own.
+     *
+     * Techguns ships two crafting recipes for the Vector (techguns:vector and
+     * techguns:vector_alt). We remove both, then register our new one. Runs at
+     * LOWEST priority so Techguns' recipes are already registered (and thus
+     * removable) by the time this fires. The recipe registry is modifiable in
+     * 1.12.2, which is what makes remove() possible.
+     */
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void onRecipeOverride(RegistryEvent.Register<IRecipe> event) {
+        Item itemShared = Item.REGISTRY.getObject(new ResourceLocation("techguns", "itemshared"));
+        Item vector = Item.REGISTRY.getObject(new ResourceLocation("techguns", "vector"));
+        if (itemShared == null || vector == null) {
+            return;
+        }
+
+        IForgeRegistry<IRecipe> registry = event.getRegistry();
+        if (registry instanceof IForgeRegistryModifiable) {
+            IForgeRegistryModifiable<IRecipe> mod = (IForgeRegistryModifiable<IRecipe>) registry;
+            mod.remove(new ResourceLocation("techguns", "vector"));
+            mod.remove(new ResourceLocation("techguns", "vector_alt"));
+        }
+
+        // New Vector recipe:
+        //   [ - ]         [Glass Pane]     [Plastic Sheet]
+        //   [Iron Barrel] [Iron Receiver]  [Plastic Gun Stock]
+        //   [ - ]         [SMG Magazine]   [ - ]
+        GameRegistry.addShapedRecipe(
+            new ResourceLocation(TechgunsExpanded.MODID, "vector"),
+            null,
+            new ItemStack(vector),
+            " GS",
+            "IRP",
+            " M ",
+            'G', new ItemStack(Blocks.GLASS_PANE),   // Glass Pane
+            'S', new ItemStack(itemShared, 1, 55),   // Plastic Sheet
+            'I', new ItemStack(itemShared, 1, 38),   // Iron Barrel
+            'R', new ItemStack(itemShared, 1, 33),   // Iron Receiver
+            'P', new ItemStack(itemShared, 1, 43),   // Plastic Gun Stock
+            'M', new ItemStack(itemShared, 1, 9)     // SMG Magazine
+        );
     }
 
     // 30000 тиков = 150 предметов за ведро (~2.3 стака), лава = 20000 тиков (~1.56 стака)
