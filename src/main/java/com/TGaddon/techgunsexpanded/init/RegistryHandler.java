@@ -508,6 +508,10 @@ public final class RegistryHandler {
             IForgeRegistryModifiable<IRecipe> mod = (IForgeRegistryModifiable<IRecipe>) registry;
             mod.remove(new ResourceLocation("techguns", "vector"));
             mod.remove(new ResourceLocation("techguns", "vector_alt"));
+            // Remove Techguns' default Power Hammer crafts (we keep our own, added
+            // in onRecipeRegister). The head-upgrade recipes are left untouched.
+            mod.remove(new ResourceLocation("techguns", "powerhammer"));
+            mod.remove(new ResourceLocation("techguns", "powerhammer_alt"));
         }
 
         // New Vector recipe:
