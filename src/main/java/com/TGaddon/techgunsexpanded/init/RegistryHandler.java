@@ -44,6 +44,7 @@ public final class RegistryHandler {
         event.getRegistry().register(ModBlocks.ENRICHED_URANIUM_BLOCK);
         event.getRegistry().register(ModBlocks.CREATIVE_MECHANISM_BLOCK);
         event.getRegistry().register(ModBlocks.ADVANCED_METAL_PRESS);
+        event.getRegistry().register(ModBlocks.DOOR_CHARGE);
     }
 
     @SubscribeEvent
@@ -64,6 +65,21 @@ public final class RegistryHandler {
         event.getRegistry().register(ModItems.TUNGSTEN_CARBIDE_PLATE);
         event.getRegistry().register(ModItems.MECHANICAL_PARTS_TUNGSTEN_CARBIDE);
         event.getRegistry().register(ModItems.OVERHEATED_BLAZE_ROD);
+        event.getRegistry().register(ModItems.CARBON_FIBER_WING);
+        event.getRegistry().register(ModItems.ROCKET_FAIRING);
+        event.getRegistry().register(ModItems.ROCKET_ENGINE);
+        event.getRegistry().register(com.TGaddon.techgunsexpanded.rockets.ModRockets.AMMO_HP);
+        event.getRegistry().register(com.TGaddon.techgunsexpanded.rockets.ModRockets.AMMO_HP_HV);
+        event.getRegistry().register(com.TGaddon.techgunsexpanded.equipment.ModEquipment.ANTIGRAV_JETPACK);
+        event.getRegistry().register(com.TGaddon.techgunsexpanded.tools.ModTools.LASER_DRILL);
+        event.getRegistry().register(com.TGaddon.techgunsexpanded.tools.ModTools.SILK_TOUCH_UPGRADE);
+        event.getRegistry().register(com.TGaddon.techgunsexpanded.tools.ModTools.MAGNET_UPGRADE);
+        event.getRegistry().register(com.TGaddon.techgunsexpanded.tools.ModTools.AUTO_SMELTING_UPGRADE);
+        event.getRegistry().register(com.TGaddon.techgunsexpanded.tools.ModTools.FLUID_CONVERTER_UPGRADE);
+        event.getRegistry().register(com.TGaddon.techgunsexpanded.tools.ModTools.AREA_EXPANSION_UPGRADE);
+        event.getRegistry().register(com.TGaddon.techgunsexpanded.tools.ModTools.ENERGY_EFFICIENCY_UPGRADE);
+        event.getRegistry().register(com.TGaddon.techgunsexpanded.tools.ModTools.CAPACITY_UPGRADE);
+        event.getRegistry().register(com.TGaddon.techgunsexpanded.ammo.BreachingAmmo.BREACHING_SHELLS);
         event.getRegistry().register(ModBlocks.TUNGSTEN_CARBIDE_ORE_ITEM);
         event.getRegistry().register(ModBlocks.TUNGSTEN_CARBIDE_BLOCK_ITEM);
         event.getRegistry().register(ModBlocks.FUEL_GENERATOR_ITEM);
@@ -76,12 +92,107 @@ public final class RegistryHandler {
         event.getRegistry().register(ModBlocks.ENRICHED_URANIUM_BLOCK_ITEM);
         event.getRegistry().register(ModBlocks.CREATIVE_MECHANISM_BLOCK_ITEM);
         event.getRegistry().register(ModBlocks.ADVANCED_METAL_PRESS_ITEM);
+        event.getRegistry().register(ModBlocks.DOOR_CHARGE_ITEM);
     }
 
     @SubscribeEvent
     public static void onRecipeRegister(RegistryEvent.Register<IRecipe> event) {
         Item itemShared = Item.REGISTRY.getObject(new ResourceLocation("techguns", "itemshared"));
         if (itemShared == null) return;
+
+        // Rocket Fairing:
+        //   [ - ]                 [Titanium Plate]  [ - ]
+        //   [ - ]                 [Obsidian Steel]  [ - ]
+        //   [Obsidian Steel]      [Titanium Plate]  [Obsidian Steel]
+        // Obsidian Steel Plate = metadata 51, Titanium Plate = metadata 54
+        GameRegistry.addShapedRecipe(
+            new ResourceLocation(TechgunsExpanded.MODID, "rocket_fairing"),
+            null,
+            new ItemStack(ModItems.ROCKET_FAIRING),
+            " T ",
+            " O ",
+            "OTO",
+            'T', new ItemStack(itemShared, 1, 54),
+            'O', new ItemStack(itemShared, 1, 51)
+        );
+
+        // Rocket Engine:
+        //   [Steel Plate]    [Fuel Tank (Empty)] [Steel Plate]
+        //   [Obsidian Steel] [Pump Mechanism]    [Obsidian Steel]
+        //   [Obsidian Steel] [ - ]               [Obsidian Steel]
+        // Fuel Tank (Empty) = 28, Steel Plate = 50, Obsidian Steel Plate = 51,
+        // Pump Mechanism = 72
+        GameRegistry.addShapedRecipe(
+            new ResourceLocation(TechgunsExpanded.MODID, "rocket_engine"),
+            null,
+            new ItemStack(ModItems.ROCKET_ENGINE),
+            "SFS",
+            "OPO",
+            "O O",
+            'S', new ItemStack(itemShared, 1, 50),
+            'F', new ItemStack(itemShared, 1, 28),
+            'O', new ItemStack(itemShared, 1, 51),
+            'P', new ItemStack(itemShared, 1, 72)
+        );
+
+        // Carbon Fiber Wing:
+        //   [Titanium Ingot] [Titanium Ingot] [Titanium Ingot]
+        //   [Carbon Plate]   [Carbon Plate]   [Carbon Plate]
+        //   [Carbon Plate]   [Carbon Plate]   [Carbon Plate]
+        // Carbon Plate = metadata 53, Titanium Ingot = metadata 85
+        GameRegistry.addShapedRecipe(
+            new ResourceLocation(TechgunsExpanded.MODID, "carbon_fiber_wing"),
+            null,
+            new ItemStack(ModItems.CARBON_FIBER_WING),
+            "TTT",
+            "CCC",
+            "CCC",
+            'T', new ItemStack(itemShared, 1, 85),
+            'C', new ItemStack(itemShared, 1, 53)
+        );
+
+        // Anti-Gravity Jetpack:
+        //   [Carbon Plate]      [Elite Circuit Board] [Carbon Plate]
+        //   [Carbon Fiber Wing] [Anti-Gravity Device] [Carbon Fiber Wing]
+        //   [Carbon Plate]      [Elite Circuit Board] [Carbon Plate]
+        // Carbon Plate = metadata 53, Elite Circuit Board = metadata 66.
+        // The Anti-Gravity Device is damageable (its charge is stored as damage),
+        // so it is matched with WILDCARD_VALUE - otherwise a pack that has been
+        // flown even once would no longer fit the recipe.
+        GameRegistry.addShapedRecipe(
+            new ResourceLocation(TechgunsExpanded.MODID, "antigrav_jetpack"),
+            null,
+            new ItemStack(com.TGaddon.techgunsexpanded.equipment.ModEquipment.ANTIGRAV_JETPACK),
+            "CEC",
+            "WAW",
+            "CEC",
+            'C', new ItemStack(itemShared, 1, 53),
+            'E', new ItemStack(itemShared, 1, 66),
+            'W', new ItemStack(ModItems.CARBON_FIBER_WING),
+            'A', new ItemStack(techguns.TGItems.ANTI_GRAV_PACK, 1,
+                    net.minecraftforge.oredict.OreDictionary.WILDCARD_VALUE)
+        );
+
+        // High-Power Rocket:
+        //   [ - ]         [Steel Plate]            [ - ]
+        //   [Steel Plate] [Advanced Mining Charge] [Steel Plate]
+        //   [Steel Plate] [TGX]                    [Steel Plate]
+        // Steel Plate = itemshared 50, TGX = itemshared 75,
+        // Advanced Mining Charge = block techguns:explosive_charge, metadata 1.
+        Item explosiveCharge = Item.REGISTRY.getObject(new ResourceLocation("techguns", "explosive_charge"));
+        if (explosiveCharge != null) {
+            GameRegistry.addShapedRecipe(
+                new ResourceLocation(TechgunsExpanded.MODID, "rocket_high_power"),
+                null,
+                new ItemStack(com.TGaddon.techgunsexpanded.rockets.ModRockets.AMMO_HP),
+                " S ",
+                "SMS",
+                "STS",
+                'S', new ItemStack(itemShared, 1, 50),
+                'M', new ItemStack(explosiveCharge, 1, 1),
+                'T', new ItemStack(itemShared, 1, 75)
+            );
+        }
 
         // Copper Wire = metadata 62, Mechanical Parts (Iron) = metadata 57
         GameRegistry.addShapedRecipe(
@@ -535,6 +646,24 @@ public final class RegistryHandler {
     }
 
     // 30000 тиков = 150 предметов за ведро (~2.3 стака), лава = 20000 тиков (~1.56 стака)
+    /** Diagnostic: logs every rocket projectile spawn with its class + damage. */
+    @SubscribeEvent
+    public static void onRocketSpawn(net.minecraftforge.event.entity.EntityJoinWorldEvent event) {
+        net.minecraft.entity.Entity ent = event.getEntity();
+        if (ent instanceof techguns.entities.projectiles.RocketProjectile) {
+            String dmg = "?";
+            try {
+                java.lang.reflect.Field f =
+                        techguns.entities.projectiles.GenericProjectile.class.getDeclaredField("damage");
+                f.setAccessible(true);
+                dmg = String.valueOf(f.getFloat(ent));
+            } catch (Exception ignored) {}
+            System.out.println("[TechgunsExpanded][rockets] ROCKET SPAWNED class="
+                    + ent.getClass().getName() + " damage=" + dmg
+                    + " side=" + (ent.world != null && ent.world.isRemote ? "client" : "server"));
+        }
+    }
+
     @SubscribeEvent
     public static void onFurnaceFuel(FurnaceFuelBurnTimeEvent event) {
         if (event.getItemStack().getItem() == ModFluids.OIL_BUCKET) {

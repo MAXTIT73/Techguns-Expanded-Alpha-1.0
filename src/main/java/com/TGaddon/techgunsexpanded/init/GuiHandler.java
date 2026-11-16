@@ -1,5 +1,9 @@
 package com.TGaddon.techgunsexpanded.init;
 
+import com.TGaddon.techgunsexpanded.tools.ContainerLaserDrill;
+import com.TGaddon.techgunsexpanded.tools.ContainerLaserDrillUpgrades;
+import com.TGaddon.techgunsexpanded.tools.GuiLaserDrill;
+import com.TGaddon.techgunsexpanded.tools.GuiLaserDrillUpgrades;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -11,8 +15,20 @@ import techguns.tileentities.MetalPressTileEnt;
 
 public class GuiHandler implements IGuiHandler {
 
+    /** Laser Drill settings window - bound to the drill in hand, not to a block. */
+    public static final int LASER_DRILL = 8;
+
+    /** Laser Drill upgrades window (Tab in the settings window). */
+    public static final int LASER_DRILL_UPGRADES = 9;
+
     @Override
     public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
+        if (id == LASER_DRILL) {
+            return new ContainerLaserDrill(player);
+        }
+        if (id == LASER_DRILL_UPGRADES) {
+            return new ContainerLaserDrillUpgrades(player);
+        }
         TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
         if (id == 0 && te instanceof TileEntityFuelGenerator) {
             return new ContainerFuelGenerator(player.inventory, (TileEntityFuelGenerator) te);
@@ -43,6 +59,12 @@ public class GuiHandler implements IGuiHandler {
 
     @Override
     public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
+        if (id == LASER_DRILL) {
+            return new GuiLaserDrill(player);
+        }
+        if (id == LASER_DRILL_UPGRADES) {
+            return new GuiLaserDrillUpgrades(player);
+        }
         TileEntity te = world.getTileEntity(new BlockPos(x, y, z));
         if (id == 0 && te instanceof TileEntityFuelGenerator) {
             return new GuiFuelGenerator(player.inventory, (TileEntityFuelGenerator) te);

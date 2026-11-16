@@ -21,6 +21,9 @@ public class ModItems {
     public static Item TUNGSTEN_CARBIDE_PLATE;
     public static Item MECHANICAL_PARTS_TUNGSTEN_CARBIDE;
     public static Item OVERHEATED_BLAZE_ROD;
+    public static Item CARBON_FIBER_WING;
+    public static Item ROCKET_FAIRING;
+    public static Item ROCKET_ENGINE;
 
     public static void register() {
         TUNGSTEN_CARBIDE_INGOT = new Item()
@@ -96,6 +99,21 @@ public class ModItems {
         OVERHEATED_BLAZE_ROD = new Item()
                 .setUnlocalizedName("overheated_blaze_rod")
                 .setRegistryName(TechgunsExpanded.MODID, "overheated_blaze_rod")
+                .setCreativeTab(Techguns.tabTechgun);
+
+        CARBON_FIBER_WING = new Item()
+                .setUnlocalizedName("carbon_fiber_wing")
+                .setRegistryName(TechgunsExpanded.MODID, "carbon_fiber_wing")
+                .setCreativeTab(Techguns.tabTechgun);
+
+        ROCKET_FAIRING = new Item()
+                .setUnlocalizedName("rocket_fairing")
+                .setRegistryName(TechgunsExpanded.MODID, "rocket_fairing")
+                .setCreativeTab(Techguns.tabTechgun);
+
+        ROCKET_ENGINE = new Item()
+                .setUnlocalizedName("rocket_engine")
+                .setRegistryName(TechgunsExpanded.MODID, "rocket_engine")
                 .setCreativeTab(Techguns.tabTechgun);
     }
 }

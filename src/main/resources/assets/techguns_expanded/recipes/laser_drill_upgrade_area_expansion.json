@@ -1,0 +1,28 @@
+{
+  "result": {
+    "item": "techguns_expanded:laser_drill_upgrade_area_expansion"
+  },
+  "pattern": [
+    "prp",
+    "gdg",
+    "prp"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "p": {
+      "item": "techguns:itemshared",
+      "data": 50
+    },
+    "r": {
+      "item": "minecraft:redstone"
+    },
+    "g": {
+      "item": "techguns:itemshared",
+      "data": 63
+    },
+    "d": {
+      "item": "techguns:itemshared",
+      "data": 142
+    }
+  }
+}

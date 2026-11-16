@@ -29,6 +29,11 @@ minecraft {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    // Compile-only stubs for Techguns' optional Albedo dependency (dynamic lighting).
+    // RocketProjectile implements elucent.albedo.lighting.ILightProvider; we only
+    // need the types present to subclass it. 'provided' keeps them off the runtime
+    // jar so they never clash with a real Albedo install.
+    provided files('stub_libs/albedo-stubs.jar')
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.

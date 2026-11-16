@@ -12,6 +12,7 @@ import com.TGaddon.techgunsexpanded.init.TileEntityFuelGeneratorMk5;
 import com.TGaddon.techgunsexpanded.init.TileEntityFuelGeneratorMk6;
 import com.TGaddon.techgunsexpanded.init.TileEntityFuelGeneratorCreative;
 import com.TGaddon.techgunsexpanded.init.TileEntityAdvancedMetalPress;
+import com.TGaddon.techgunsexpanded.rockets.ModRockets;
 import com.TGaddon.techgunsexpanded.world.WorldGenTungstenCarbideOre;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -84,6 +85,13 @@ public class TechgunsExpanded
 
         ModItems.register();
         ModBlocks.register();
+        ModRockets.createItems();
+        com.TGaddon.techgunsexpanded.equipment.ModEquipment.createItems();
+        com.TGaddon.techgunsexpanded.tools.ModTools.createItems();
+        ModRockets.registerEntities();
+        com.TGaddon.techgunsexpanded.tools.ModTools.registerEntities();
+        // Breaching shotgun shells: item, Techguns shotgun ammo variant, pellet entity.
+        com.TGaddon.techgunsexpanded.ammo.BreachingAmmo.init();
         GameRegistry.registerTileEntity(TileEntityFuelGenerator.class,
                 new ResourceLocation(MODID, "fuel_generator"));
         GameRegistry.registerTileEntity(TileEntityFuelGeneratorMk2.class,
@@ -100,6 +108,8 @@ public class TechgunsExpanded
                 new ResourceLocation(MODID, "fuel_generator_creative"));
         GameRegistry.registerTileEntity(TileEntityAdvancedMetalPress.class,
                 new ResourceLocation(MODID, "advanced_metal_press"));
+        GameRegistry.registerTileEntity(com.TGaddon.techgunsexpanded.explosives.TileDoorCharge.class,
+                new ResourceLocation(MODID, "door_charge"));
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
         GameRegistry.registerWorldGenerator(new WorldGenTungstenCarbideOre(), 0);
         logger.info("[TechgunsExpanded] Tungsten Carbide Ore world generator registered (Nether, dim -1)");
@@ -132,6 +142,12 @@ public class TechgunsExpanded
         );
 
         rebalanceGuns();
+
+        // Wire the new rocket variants into Techguns' launcher. Done here (after
+        // Techguns has registered its guns, so ROCKET_PROJECTILES exists). The
+        // ammo-change recipe resolves the variant at craft time, so this is early
+        // enough.
+        ModRockets.injectVariants();
     }
 
     /**
@@ -207,6 +223,13 @@ public class TechgunsExpanded
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
+        // Door Charge window (Techguns' handler; Techguns added its own in init).
+        if (event.getSide().isClient()) {
+            com.TGaddon.techgunsexpanded.explosives.DoorChargeGuiRegistration.registerClient();
+        } else {
+            com.TGaddon.techgunsexpanded.explosives.DoorChargeGuiRegistration.registerServer();
+        }
+
         Item itemShared = Item.REGISTRY.getObject(new ResourceLocation("techguns", "itemshared"));
 
         // Metal Press: 1x Gold Wire + 1x Diamond -> 1x Diamond Wire
@@ -218,6 +241,16 @@ public class TechgunsExpanded
                 false
             );
         }
+
+        // Metal Press: 1x Copper Nugget + 1x Shotgun Rounds -> 1x Breaching Shotgun Shells.
+        // The nugget by ore name: Techguns' copper nugget is optional and may be
+        // another mod's in a modpack. Either slot order works.
+        MetalPressRecipes.addRecipe(
+            "nuggetCopper",
+            techguns.TGItems.newStack(techguns.TGItems.SHOTGUN_ROUNDS, 1),
+            new ItemStack(com.TGaddon.techgunsexpanded.ammo.BreachingAmmo.BREACHING_SHELLS, 1),
+            true
+        );
 
         // Metal Press: 2x Tungsten Carbide Ingot -> 2x Tungsten Carbide Plate
         MetalPressRecipes.addRecipe(
@@ -344,6 +377,30 @@ public class TechgunsExpanded
                 powderMechTitan,  1,
                 plateTC,          2,
                 new ItemStack(ModItems.POWER_ARMOR_PLATING_MK2), 1
+            );
+        }
+
+        // Fabricator: 8x High-Power Rocket + 3x Rocket Engine + 1x Rocket Fairing
+        //   + 1x Carbon Plate -> 8x High-Power High-Velocity Rocket
+        // Slots are (main, wire, powder, plate); the rockets being upgraded are the
+        // base component so they go in the main slot.
+        if (itemShared != null) {
+            ItemStackOreDict mainRocketHP   = new ItemStackOreDict(new ItemStack(ModRockets.AMMO_HP), 1);
+            ItemStackOreDict wireEngine     = new ItemStackOreDict(new ItemStack(ModItems.ROCKET_ENGINE), 1);
+            ItemStackOreDict powderFairing  = new ItemStackOreDict(new ItemStack(ModItems.ROCKET_FAIRING), 1);
+            ItemStackOreDict plateCarbonHV  = new ItemStackOreDict(new ItemStack(itemShared, 1, 53), 1); // Carbon Plate (meta 53)
+
+            // Whitelist the non-default items into their slots. (Main slot needs none.)
+            FabricatorRecipe.items_wireslot.add(wireEngine);
+            FabricatorRecipe.items_powderslot.add(powderFairing);
+            FabricatorRecipe.items_plateslot.add(plateCarbonHV);
+
+            FabricatorRecipe.addRecipe(
+                mainRocketHP,   8,
+                wireEngine,     3,
+                powderFairing,  1,
+                plateCarbonHV,  1,
+                new ItemStack(ModRockets.AMMO_HP_HV), 8
             );
         }
 

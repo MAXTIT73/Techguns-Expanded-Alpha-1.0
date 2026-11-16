@@ -1,0 +1,36 @@
+{
+  "result": {
+    "item": "techguns_expanded:laser_drill"
+  },
+  "pattern": [
+    " o ",
+    "brs",
+    " ec"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "o": {
+      "item": "techguns:oredrill",
+      "data": 4
+    },
+    "b": {
+      "item": "techguns:itemshared",
+      "data": 41
+    },
+    "r": {
+      "item": "techguns:itemshared",
+      "data": 36
+    },
+    "s": {
+      "item": "techguns:itemshared",
+      "data": 44
+    },
+    "e": {
+      "item": "techguns:itemshared",
+      "data": 29
+    },
+    "c": {
+      "item": "techguns_expanded:advanced_cybernetic_parts"
+    }
+  }
+}

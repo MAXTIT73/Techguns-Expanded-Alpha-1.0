@@ -1,0 +1,14 @@
+{
+  "result": {
+    "item": "techguns:combatshotgun"
+  },
+  "ingredients": [
+    {
+      "item": "techguns:combatshotgun"
+    },
+    {
+      "item": "techguns_expanded:shotgunrounds_breaching"
+    }
+  ],
+  "type": "techguns:ammo_change_crafting"
+}

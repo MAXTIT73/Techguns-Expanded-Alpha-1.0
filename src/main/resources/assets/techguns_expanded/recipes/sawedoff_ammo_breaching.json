@@ -1,0 +1,14 @@
+{
+  "result": {
+    "item": "techguns:sawedoff"
+  },
+  "ingredients": [
+    {
+      "item": "techguns:sawedoff"
+    },
+    {
+      "item": "techguns_expanded:shotgunrounds_breaching"
+    }
+  ],
+  "type": "techguns:ammo_change_crafting"
+}

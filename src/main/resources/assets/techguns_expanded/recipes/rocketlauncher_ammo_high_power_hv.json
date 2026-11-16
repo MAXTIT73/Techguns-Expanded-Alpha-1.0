@@ -1,0 +1,14 @@
+{
+  "result": {
+    "item": "techguns:rocketlauncher"
+  },
+  "ingredients": [
+    {
+      "item": "techguns:rocketlauncher"
+    },
+    {
+      "item": "techguns_expanded:rocket_high_power_hv"
+    }
+  ],
+  "type": "techguns:ammo_change_crafting"
+}

@@ -1,0 +1,14 @@
+{
+  "result": {
+    "item": "techguns:guidedmissilelauncher"
+  },
+  "ingredients": [
+    {
+      "item": "techguns:guidedmissilelauncher"
+    },
+    {
+      "item": "techguns_expanded:rocket_high_power"
+    }
+  ],
+  "type": "techguns:ammo_change_crafting"
+}

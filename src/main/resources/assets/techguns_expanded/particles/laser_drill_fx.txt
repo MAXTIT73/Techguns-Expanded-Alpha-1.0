@@ -1,0 +1,82 @@
+// Laser Drill impact effect: Techguns' "LaserGunImpact" (fxlist.txt), copied
+// with purple colours. Loaded by ClientProxy through Techguns' own loader
+// (TGFX.loadFXListFile), so the format is Techguns'.
+
+FXLIST LaserDrillImpact {
+LaserDrillFlareEnd
+LaserDrillImpactSparks
+}
+
+LaserDrillImpactSparks {
+AnimationSpeed = 1 1
+Texture = techguns:textures/fx/lensflare3.png
+RenderType = ADDITIVE
+Rows = 1
+Columns = 1
+Frames = 1
+HasVariations = false
+Angle = 0 360
+AngleRate = -10 10
+AngleRateDamping = 0.95 0.97
+Lifetime = 12 18
+SystemLifetime = 1 1
+AnimationSpeed = 1 1
+Size = 0.1 0.2
+SizeRate = 0.1 0.2
+SizeRateDamping = 0.75 0.78
+StartSizeRate = 0 0
+StartSizeRateDamping = 1.0 1.0
+Alpha = 0.0 0
+Alpha = 1.0 0.5
+Alpha = 0 1.0
+Color = 255 64 239 0
+Color = 191 0 255 1
+//Color = 0 0 0 1
+ParticleCount = 4 5
+InitialDelay = 0 0
+SpawnDelay = 0 0
+VelocityType = SPHERICAL
+Velocity1 = 0 3
+//Velocity2 = 2 6
+VelocityDamping = 0.84 0.87
+Gravity = 0.02
+VolumeType = POINT
+IsHollow = false
+RemoveOnGround = true
+}
+
+LaserDrillFlareEnd {
+AnimationSpeed = 1 1
+Size = 3.0 5.0
+Texture = techguns_expanded:textures/fx/laser_drill_flare.png
+RenderType = ADDITIVE
+Rows = 2
+Columns = 4
+Frames = 7
+HasVariations = false
+Angle = 0 360
+AngleRate = -10 10
+AngleRateDamping = 0.95 0.97
+Lifetime = 7 7
+SystemLifetime = 1 1
+AnimationSpeed = 1 1
+Size = 1.0 2.0
+SizeRate = 1.20 1.87
+SizeRateDamping = 0.90 0.91
+Alpha = 0.0 0
+Alpha = 1.0 0.25
+Alpha = 0 1.0
+//Alpha = 1 1 0
+Color = 255 255 255 0
+Color = 255 255 255 1
+ParticleCount = 1 1
+InitialDelay = 0 0
+SpawnDelay = 1 1
+VelocityType = NONE
+//VelocityDamping = 0.95 0.97
+Gravity = 0.0
+VolumeType = POINT
+IsHollow =false
+RemoveOnGround = false
+SystemVelocityFactor = 0 0
+}

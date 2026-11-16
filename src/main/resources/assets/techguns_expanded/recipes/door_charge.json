@@ -1,0 +1,25 @@
+{
+  "result": {
+    "item": "techguns_expanded:door_charge"
+  },
+  "pattern": [
+    "nnn",
+    "tct",
+    "nnn"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "n": {
+      "type": "forge:ore_dict",
+      "ore": "nuggetSteel"
+    },
+    "t": {
+      "item": "techguns:itemshared",
+      "data": 75
+    },
+    "c": {
+      "item": "techguns:itemshared",
+      "data": 65
+    }
+  }
+}
