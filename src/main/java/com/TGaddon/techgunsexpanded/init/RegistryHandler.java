@@ -44,6 +44,8 @@ public final class RegistryHandler {
         event.getRegistry().register(ModBlocks.ENRICHED_URANIUM_BLOCK);
         event.getRegistry().register(ModBlocks.CREATIVE_MECHANISM_BLOCK);
         event.getRegistry().register(ModBlocks.ADVANCED_METAL_PRESS);
+        event.getRegistry().register(ModBlocks.PROFESSIONAL_METAL_PRESS);
+        event.getRegistry().register(ModBlocks.ELITE_METAL_PRESS);
         event.getRegistry().register(ModBlocks.DOOR_CHARGE);
     }
 
@@ -92,6 +94,8 @@ public final class RegistryHandler {
         event.getRegistry().register(ModBlocks.ENRICHED_URANIUM_BLOCK_ITEM);
         event.getRegistry().register(ModBlocks.CREATIVE_MECHANISM_BLOCK_ITEM);
         event.getRegistry().register(ModBlocks.ADVANCED_METAL_PRESS_ITEM);
+        event.getRegistry().register(ModBlocks.PROFESSIONAL_METAL_PRESS_ITEM);
+        event.getRegistry().register(ModBlocks.ELITE_METAL_PRESS_ITEM);
         event.getRegistry().register(ModBlocks.DOOR_CHARGE_ITEM);
     }
 

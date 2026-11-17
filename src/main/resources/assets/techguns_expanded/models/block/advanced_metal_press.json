@@ -1,6 +1,6 @@
 {
-  "parent": "block/cube_all",
-  "textures": {
-    "all": "techguns_expanded:blocks/advanced_metal_press"
-  }
+    "parent": "block/block",
+    "textures": {
+        "particle": "techguns:blocks/paintmachine_side"
+    }
 }

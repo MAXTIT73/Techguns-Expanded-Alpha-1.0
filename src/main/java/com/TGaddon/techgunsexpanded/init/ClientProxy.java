@@ -350,10 +350,28 @@ public final class ClientProxy {
                 new ModelResourceLocation(ModBlocks.CREATIVE_MECHANISM_BLOCK.getRegistryName(), "inventory")
         );
 
-        ModelLoader.setCustomModelResourceLocation(
-                Item.getItemFromBlock(ModBlocks.ADVANCED_METAL_PRESS), 0,
-                new ModelResourceLocation(ModBlocks.ADVANCED_METAL_PRESS.getRegistryName(), "inventory")
-        );
+        // Multi-line Metal Presses: Techguns' Metal Press model and renderer
+        // with each press's own texture (yellow, red, purple trim), for the block and
+        // (through the tile entity renderer) for the item - its item model is
+        // builtin/entity.
+        registerMetalPress(ModBlocks.ADVANCED_METAL_PRESS, TileEntityAdvancedMetalPress.class,
+                "advanced_metal_press");
+        registerMetalPress(ModBlocks.PROFESSIONAL_METAL_PRESS, TileEntityProfessionalMetalPress.class,
+                "professional_metal_press");
+        registerMetalPress(ModBlocks.ELITE_METAL_PRESS, TileEntityEliteMetalPress.class,
+                "elite_metal_press");
+    }
+
+    private static void registerMetalPress(net.minecraft.block.Block block,
+                                           Class<? extends TileEntityMultiLineMetalPress> tile, String texture) {
+        net.minecraftforge.fml.client.registry.ClientRegistry.bindTileEntitySpecialRenderer(tile,
+                new techguns.client.render.tileentities.RenderMachine(
+                        new techguns.client.models.machines.ModelMetalPress(),
+                        new ResourceLocation(TechgunsExpanded.MODID, "textures/blocks/" + texture + ".png")));
+        Item item = Item.getItemFromBlock(block);
+        net.minecraftforge.client.ForgeHooksClient.registerTESRItemStack(item, 0, tile);
+        ModelLoader.setCustomModelResourceLocation(item, 0,
+                new ModelResourceLocation(block.getRegistryName(), "inventory"));
     }
 
     /**

@@ -1,19 +1,17 @@
 package com.TGaddon.techgunsexpanded.init;
 
-import techguns.tileentities.MetalPressTileEnt;
+/** Advanced Metal Press (tier 2): 2 lines, 1.5x the Metal Press's speed. */
+public class TileEntityAdvancedMetalPress extends TileEntityMultiLineMetalPress {
 
-public class TileEntityAdvancedMetalPress extends MetalPressTileEnt {
+    public static final int LINES = 2;
+    public static final float SPEED = 1.5F;
 
     public TileEntityAdvancedMetalPress() {
-        super();
+        super(LINES, SPEED);
     }
 
     @Override
-    protected void checkAndStartOperation() {
-        super.checkAndStartOperation();
-        // Make 1.5x faster: reduce totaltime from 100 to ~67
-        if (this.currentOperation != null && this.totaltime > 0) {
-            this.totaltime = Math.round(this.totaltime / 1.5f);
-        }
+    protected String getBlockName() {
+        return "advanced_metal_press";
     }
 }

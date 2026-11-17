@@ -9,11 +9,17 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
-import techguns.gui.MetalPressGui;
-import techguns.gui.containers.MetalPressContainer;
-import techguns.tileentities.MetalPressTileEnt;
 
 public class GuiHandler implements IGuiHandler {
+
+    /** Advanced Metal Press window (two press lines). */
+    public static final int ADVANCED_METAL_PRESS = 7;
+
+    /** Professional Metal Press window (three press lines). */
+    public static final int PROFESSIONAL_METAL_PRESS = 10;
+
+    /** Elite Metal Press window (four press lines). */
+    public static final int ELITE_METAL_PRESS = 11;
 
     /** Laser Drill settings window - bound to the drill in hand, not to a block. */
     public static final int LASER_DRILL = 8;
@@ -51,8 +57,16 @@ public class GuiHandler implements IGuiHandler {
         if (id == 6 && te instanceof TileEntityFuelGeneratorCreative) {
             return new ContainerFuelGenerator(player.inventory, (TileEntityFuelGeneratorCreative) te);
         }
-        if (id == 7 && te instanceof MetalPressTileEnt) {
-            return new MetalPressContainer(player.inventory, (MetalPressTileEnt) te);
+        if (id == ADVANCED_METAL_PRESS && te instanceof TileEntityAdvancedMetalPress) {
+            return new ContainerAdvancedMetalPress(player.inventory, (TileEntityAdvancedMetalPress) te);
+        }
+        if (id == PROFESSIONAL_METAL_PRESS && te instanceof TileEntityProfessionalMetalPress) {
+            return new ContainerMultiLineMetalPress(player.inventory, (TileEntityProfessionalMetalPress) te,
+                    MetalPressLayout.PROFESSIONAL);
+        }
+        if (id == ELITE_METAL_PRESS && te instanceof TileEntityEliteMetalPress) {
+            return new ContainerMultiLineMetalPress(player.inventory, (TileEntityEliteMetalPress) te,
+                    MetalPressLayout.ELITE);
         }
         return null;
     }
@@ -87,8 +101,14 @@ public class GuiHandler implements IGuiHandler {
         if (id == 6 && te instanceof TileEntityFuelGeneratorCreative) {
             return new GuiFuelGenerator(player.inventory, (TileEntityFuelGeneratorCreative) te);
         }
-        if (id == 7 && te instanceof MetalPressTileEnt) {
-            return new MetalPressGui(player.inventory, (MetalPressTileEnt) te);
+        if (id == ADVANCED_METAL_PRESS && te instanceof TileEntityAdvancedMetalPress) {
+            return new GuiAdvancedMetalPress(player.inventory, (TileEntityAdvancedMetalPress) te);
+        }
+        if (id == PROFESSIONAL_METAL_PRESS && te instanceof TileEntityProfessionalMetalPress) {
+            return new GuiProfessionalMetalPress(player.inventory, (TileEntityProfessionalMetalPress) te);
+        }
+        if (id == ELITE_METAL_PRESS && te instanceof TileEntityEliteMetalPress) {
+            return new GuiEliteMetalPress(player.inventory, (TileEntityEliteMetalPress) te);
         }
         return null;
     }

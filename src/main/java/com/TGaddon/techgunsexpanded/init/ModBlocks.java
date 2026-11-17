@@ -20,6 +20,8 @@ public class ModBlocks {
     public static Block ENRICHED_URANIUM_BLOCK;
     public static Block CREATIVE_MECHANISM_BLOCK;
     public static Block ADVANCED_METAL_PRESS;
+    public static Block PROFESSIONAL_METAL_PRESS;
+    public static Block ELITE_METAL_PRESS;
     public static Block DOOR_CHARGE;
 
     public static ItemBlock TUNGSTEN_CARBIDE_ORE_ITEM;
@@ -34,6 +36,8 @@ public class ModBlocks {
     public static ItemBlock ENRICHED_URANIUM_BLOCK_ITEM;
     public static ItemBlock CREATIVE_MECHANISM_BLOCK_ITEM;
     public static ItemBlock ADVANCED_METAL_PRESS_ITEM;
+    public static ItemBlock PROFESSIONAL_METAL_PRESS_ITEM;
+    public static ItemBlock ELITE_METAL_PRESS_ITEM;
     public static ItemBlock DOOR_CHARGE_ITEM;
 
     public static void register() {
@@ -113,6 +117,14 @@ public class ModBlocks {
         ADVANCED_METAL_PRESS = new BlockAdvancedMetalPress();
         ADVANCED_METAL_PRESS_ITEM = new ItemBlock(ADVANCED_METAL_PRESS);
         ADVANCED_METAL_PRESS_ITEM.setRegistryName(ADVANCED_METAL_PRESS.getRegistryName());
+
+        PROFESSIONAL_METAL_PRESS = new BlockProfessionalMetalPress();
+        PROFESSIONAL_METAL_PRESS_ITEM = new ItemBlock(PROFESSIONAL_METAL_PRESS);
+        PROFESSIONAL_METAL_PRESS_ITEM.setRegistryName(PROFESSIONAL_METAL_PRESS.getRegistryName());
+
+        ELITE_METAL_PRESS = new BlockEliteMetalPress();
+        ELITE_METAL_PRESS_ITEM = new ItemBlock(ELITE_METAL_PRESS);
+        ELITE_METAL_PRESS_ITEM.setRegistryName(ELITE_METAL_PRESS.getRegistryName());
 
         // Breaching charge for doors; works like Techguns' Mining Charge for now.
         DOOR_CHARGE = new com.TGaddon.techgunsexpanded.explosives.BlockDoorCharge();
