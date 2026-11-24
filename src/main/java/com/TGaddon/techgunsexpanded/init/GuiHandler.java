@@ -21,6 +21,15 @@ public class GuiHandler implements IGuiHandler {
     /** Elite Metal Press window (four press lines). */
     public static final int ELITE_METAL_PRESS = 11;
 
+    /** Advanced Ammo Press window (two press lines). */
+    public static final int ADVANCED_AMMO_PRESS = 12;
+
+    /** Professional Ammo Press window (three press lines, wider window). */
+    public static final int PROFESSIONAL_AMMO_PRESS = 13;
+
+    /** Elite Ammo Press window (four press lines, extra wide window). */
+    public static final int ELITE_AMMO_PRESS = 14;
+
     /** Laser Drill settings window - bound to the drill in hand, not to a block. */
     public static final int LASER_DRILL = 8;
 
@@ -68,6 +77,18 @@ public class GuiHandler implements IGuiHandler {
             return new ContainerMultiLineMetalPress(player.inventory, (TileEntityEliteMetalPress) te,
                     MetalPressLayout.ELITE);
         }
+        if (id == ADVANCED_AMMO_PRESS && te instanceof TileEntityAdvancedAmmoPress) {
+            return new ContainerMultiLineAmmoPress(player.inventory, (TileEntityAdvancedAmmoPress) te,
+                    AmmoPressLayout.ADVANCED);
+        }
+        if (id == PROFESSIONAL_AMMO_PRESS && te instanceof TileEntityProfessionalAmmoPress) {
+            return new ContainerMultiLineAmmoPress(player.inventory, (TileEntityProfessionalAmmoPress) te,
+                    AmmoPressLayout.PROFESSIONAL);
+        }
+        if (id == ELITE_AMMO_PRESS && te instanceof TileEntityEliteAmmoPress) {
+            return new ContainerMultiLineAmmoPress(player.inventory, (TileEntityEliteAmmoPress) te,
+                    AmmoPressLayout.ELITE);
+        }
         return null;
     }
 
@@ -109,6 +130,15 @@ public class GuiHandler implements IGuiHandler {
         }
         if (id == ELITE_METAL_PRESS && te instanceof TileEntityEliteMetalPress) {
             return new GuiEliteMetalPress(player.inventory, (TileEntityEliteMetalPress) te);
+        }
+        if (id == ADVANCED_AMMO_PRESS && te instanceof TileEntityAdvancedAmmoPress) {
+            return new GuiAdvancedAmmoPress(player.inventory, (TileEntityAdvancedAmmoPress) te);
+        }
+        if (id == PROFESSIONAL_AMMO_PRESS && te instanceof TileEntityProfessionalAmmoPress) {
+            return new GuiProfessionalAmmoPress(player.inventory, (TileEntityProfessionalAmmoPress) te);
+        }
+        if (id == ELITE_AMMO_PRESS && te instanceof TileEntityEliteAmmoPress) {
+            return new GuiEliteAmmoPress(player.inventory, (TileEntityEliteAmmoPress) te);
         }
         return null;
     }

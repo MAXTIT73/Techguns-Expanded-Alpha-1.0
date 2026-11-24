@@ -22,6 +22,9 @@ public class ModBlocks {
     public static Block ADVANCED_METAL_PRESS;
     public static Block PROFESSIONAL_METAL_PRESS;
     public static Block ELITE_METAL_PRESS;
+    public static Block ADVANCED_AMMO_PRESS;
+    public static Block PROFESSIONAL_AMMO_PRESS;
+    public static Block ELITE_AMMO_PRESS;
     public static Block DOOR_CHARGE;
 
     public static ItemBlock TUNGSTEN_CARBIDE_ORE_ITEM;
@@ -38,6 +41,9 @@ public class ModBlocks {
     public static ItemBlock ADVANCED_METAL_PRESS_ITEM;
     public static ItemBlock PROFESSIONAL_METAL_PRESS_ITEM;
     public static ItemBlock ELITE_METAL_PRESS_ITEM;
+    public static ItemBlock ADVANCED_AMMO_PRESS_ITEM;
+    public static ItemBlock PROFESSIONAL_AMMO_PRESS_ITEM;
+    public static ItemBlock ELITE_AMMO_PRESS_ITEM;
     public static ItemBlock DOOR_CHARGE_ITEM;
 
     public static void register() {
@@ -125,6 +131,18 @@ public class ModBlocks {
         ELITE_METAL_PRESS = new BlockEliteMetalPress();
         ELITE_METAL_PRESS_ITEM = new ItemBlock(ELITE_METAL_PRESS);
         ELITE_METAL_PRESS_ITEM.setRegistryName(ELITE_METAL_PRESS.getRegistryName());
+
+        ADVANCED_AMMO_PRESS = new BlockAdvancedAmmoPress();
+        ADVANCED_AMMO_PRESS_ITEM = new ItemBlock(ADVANCED_AMMO_PRESS);
+        ADVANCED_AMMO_PRESS_ITEM.setRegistryName(ADVANCED_AMMO_PRESS.getRegistryName());
+
+        PROFESSIONAL_AMMO_PRESS = new BlockProfessionalAmmoPress();
+        PROFESSIONAL_AMMO_PRESS_ITEM = new ItemBlock(PROFESSIONAL_AMMO_PRESS);
+        PROFESSIONAL_AMMO_PRESS_ITEM.setRegistryName(PROFESSIONAL_AMMO_PRESS.getRegistryName());
+
+        ELITE_AMMO_PRESS = new BlockEliteAmmoPress();
+        ELITE_AMMO_PRESS_ITEM = new ItemBlock(ELITE_AMMO_PRESS);
+        ELITE_AMMO_PRESS_ITEM.setRegistryName(ELITE_AMMO_PRESS.getRegistryName());
 
         // Breaching charge for doors; works like Techguns' Mining Charge for now.
         DOOR_CHARGE = new com.TGaddon.techgunsexpanded.explosives.BlockDoorCharge();

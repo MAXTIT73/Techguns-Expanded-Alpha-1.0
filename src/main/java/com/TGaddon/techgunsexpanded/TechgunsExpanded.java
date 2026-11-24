@@ -114,6 +114,15 @@ public class TechgunsExpanded
         GameRegistry.registerTileEntity(
                 com.TGaddon.techgunsexpanded.init.TileEntityEliteMetalPress.class,
                 new ResourceLocation(MODID, "elite_metal_press"));
+        GameRegistry.registerTileEntity(
+                com.TGaddon.techgunsexpanded.init.TileEntityAdvancedAmmoPress.class,
+                new ResourceLocation(MODID, "advanced_ammo_press"));
+        GameRegistry.registerTileEntity(
+                com.TGaddon.techgunsexpanded.init.TileEntityProfessionalAmmoPress.class,
+                new ResourceLocation(MODID, "professional_ammo_press"));
+        GameRegistry.registerTileEntity(
+                com.TGaddon.techgunsexpanded.init.TileEntityEliteAmmoPress.class,
+                new ResourceLocation(MODID, "elite_ammo_press"));
         GameRegistry.registerTileEntity(com.TGaddon.techgunsexpanded.explosives.TileDoorCharge.class,
                 new ResourceLocation(MODID, "door_charge"));
         NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());

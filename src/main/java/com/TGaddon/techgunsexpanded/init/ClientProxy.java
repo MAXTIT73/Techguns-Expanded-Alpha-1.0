@@ -350,23 +350,29 @@ public final class ClientProxy {
                 new ModelResourceLocation(ModBlocks.CREATIVE_MECHANISM_BLOCK.getRegistryName(), "inventory")
         );
 
-        // Multi-line Metal Presses: Techguns' Metal Press model and renderer
-        // with each press's own texture (yellow, red, purple trim), for the block and
+        // Multi-line machines: the Techguns machine's model and renderer with
+        // each tier's own texture (yellow, red, purple trim), for the block and
         // (through the tile entity renderer) for the item - its item model is
         // builtin/entity.
-        registerMetalPress(ModBlocks.ADVANCED_METAL_PRESS, TileEntityAdvancedMetalPress.class,
-                "advanced_metal_press");
-        registerMetalPress(ModBlocks.PROFESSIONAL_METAL_PRESS, TileEntityProfessionalMetalPress.class,
-                "professional_metal_press");
-        registerMetalPress(ModBlocks.ELITE_METAL_PRESS, TileEntityEliteMetalPress.class,
-                "elite_metal_press");
+        registerMachine(ModBlocks.ADVANCED_METAL_PRESS, TileEntityAdvancedMetalPress.class,
+                new techguns.client.models.machines.ModelMetalPress(), "advanced_metal_press");
+        registerMachine(ModBlocks.PROFESSIONAL_METAL_PRESS, TileEntityProfessionalMetalPress.class,
+                new techguns.client.models.machines.ModelMetalPress(), "professional_metal_press");
+        registerMachine(ModBlocks.ELITE_METAL_PRESS, TileEntityEliteMetalPress.class,
+                new techguns.client.models.machines.ModelMetalPress(), "elite_metal_press");
+        registerMachine(ModBlocks.ADVANCED_AMMO_PRESS, TileEntityAdvancedAmmoPress.class,
+                new techguns.client.models.machines.ModelAmmoPress(), "advanced_ammo_press");
+        registerMachine(ModBlocks.PROFESSIONAL_AMMO_PRESS, TileEntityProfessionalAmmoPress.class,
+                new techguns.client.models.machines.ModelAmmoPress(), "professional_ammo_press");
+        registerMachine(ModBlocks.ELITE_AMMO_PRESS, TileEntityEliteAmmoPress.class,
+                new techguns.client.models.machines.ModelAmmoPress(), "elite_ammo_press");
     }
 
-    private static void registerMetalPress(net.minecraft.block.Block block,
-                                           Class<? extends TileEntityMultiLineMetalPress> tile, String texture) {
+    private static void registerMachine(net.minecraft.block.Block block,
+                                        Class<? extends TileEntityMultiLineMachine> tile,
+                                        techguns.client.models.machines.ModelMachine model, String texture) {
         net.minecraftforge.fml.client.registry.ClientRegistry.bindTileEntitySpecialRenderer(tile,
-                new techguns.client.render.tileentities.RenderMachine(
-                        new techguns.client.models.machines.ModelMetalPress(),
+                new techguns.client.render.tileentities.RenderMachine(model,
                         new ResourceLocation(TechgunsExpanded.MODID, "textures/blocks/" + texture + ".png")));
         Item item = Item.getItemFromBlock(block);
         net.minecraftforge.client.ForgeHooksClient.registerTESRItemStack(item, 0, tile);

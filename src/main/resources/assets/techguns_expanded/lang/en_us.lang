@@ -68,3 +68,6 @@ item.techguns_expanded.shotgunrounds_breaching.name=Breaching Shotgun Shells
 gui.techguns_expanded.advanced_metal_press.split=Split
 tile.professional_metal_press.name=Professional Metal Press
 tile.elite_metal_press.name=Elite Metal Press
+tile.advanced_ammo_press.name=Advanced Ammo Press
+tile.professional_ammo_press.name=Professional Ammo Press
+tile.elite_ammo_press.name=Elite Ammo Press
